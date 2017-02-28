@@ -31,10 +31,6 @@ import java.util.ArrayList;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
-/**
- * Created by hoka on 28.02.2017.
- */
-
 public class ReadRss extends AsyncTask<Void, Void, Void> {
     Context context;
     //*******************************************
@@ -154,7 +150,6 @@ public class ReadRss extends AsyncTask<Void, Void, Void> {
 
         if(data != null){
             feedItems=new ArrayList<>(); //объявляем для хранения записей
-
             Element root = data.getDocumentElement();
             Node channel = root.getChildNodes().item(1);
             NodeList items=channel.getChildNodes();
@@ -170,8 +165,6 @@ public class ReadRss extends AsyncTask<Void, Void, Void> {
                         Node cureent= itemchilds.item(j);
                         ArrayList<FeedItem> daoList = null;
                         if(cureent.getNodeName().equals("title")){
-                            ArrayList<FeedItem> testSizeListFeedItem;
-                            //***********************
                             try {
                                 feedItemIntegerDao = getHelper().getFeedItemDao();
                                 daoList = (ArrayList<FeedItem>) feedItemIntegerDao.queryForEq("title", cureent.getTextContent());
@@ -179,9 +172,6 @@ public class ReadRss extends AsyncTask<Void, Void, Void> {
                                 e.printStackTrace();
                             }
 
-                            Log.d("mLog", cureent.getTextContent()+"");
-                            Log.d("mLog", "size " + daoList.size()+"");
-                            //Log.d("mLog", daoList.get(1).getTitle()+"");
                             if (daoList.size() > 0) {
 
                                 BaseStatus=true;
@@ -215,6 +205,7 @@ public class ReadRss extends AsyncTask<Void, Void, Void> {
                 }
             }
         }
+
     }
 
     public Document Getdata(){
