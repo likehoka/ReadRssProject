@@ -1,4 +1,4 @@
-package com.hoka.readrssproject.Adapter;
+package com.hoka.readrssproject.adapter;
 
 import android.content.Context;
 import android.content.Intent;
@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.hoka.readrssproject.BlankDetails;
 import com.hoka.readrssproject.DetailsActivity;
 import com.hoka.readrssproject.R;
+import com.hoka.readrssproject.model.FeedItem;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

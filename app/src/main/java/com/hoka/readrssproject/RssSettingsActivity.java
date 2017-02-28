@@ -8,8 +8,8 @@ import android.widget.Toast;
 
 import com.arellomobile.mvp.MvpAppCompatActivity;
 import com.arellomobile.mvp.presenter.InjectPresenter;
-import com.hoka.readrssproject.Adapter.DatabaseHelper;
-import com.hoka.readrssproject.Adapter.SaveUrlItem;
+import com.hoka.readrssproject.database.DatabaseHelper;
+import com.hoka.readrssproject.model.SaveUrlItem;
 import com.hoka.readrssproject.View.IRssSettingsActivity;
 import com.hoka.readrssproject.presenter.RssSettingsPresenter;
 import com.j256.ormlite.android.apptools.OpenHelperManager;

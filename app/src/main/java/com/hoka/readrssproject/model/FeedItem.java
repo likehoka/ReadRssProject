@@ -1,4 +1,4 @@
-package com.hoka.readrssproject.Adapter;
+package com.hoka.readrssproject.model;
 
 import com.j256.ormlite.field.DataType;
 import com.j256.ormlite.field.DatabaseField;

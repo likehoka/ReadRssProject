@@ -1,4 +1,4 @@
-package com.hoka.readrssproject.Adapter;
+package com.hoka.readrssproject.utils;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -7,6 +7,9 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.hoka.readrssproject.adapter.NewsAdapter;
+import com.hoka.readrssproject.database.DatabaseHelper;
+import com.hoka.readrssproject.model.FeedItem;
 import com.j256.ormlite.android.apptools.OpenHelperManager;
 import com.j256.ormlite.dao.Dao;
 

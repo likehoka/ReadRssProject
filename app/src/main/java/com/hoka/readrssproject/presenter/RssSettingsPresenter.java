@@ -4,7 +4,7 @@ import android.os.AsyncTask;
 
 import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
-import com.hoka.readrssproject.Adapter.FeedItem;
+import com.hoka.readrssproject.model.FeedItem;
 import com.hoka.readrssproject.View.IRssSettingsActivity;
 
 import org.w3c.dom.Document;

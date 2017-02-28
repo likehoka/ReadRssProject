@@ -1,4 +1,4 @@
-package com.hoka.readrssproject.Adapter;
+package com.hoka.readrssproject.utils;
 
 import android.graphics.Rect;
 import android.support.v7.widget.RecyclerView;

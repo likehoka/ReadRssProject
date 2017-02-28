@@ -1,8 +1,10 @@
-package com.hoka.readrssproject.Adapter;
+package com.hoka.readrssproject.database;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.hoka.readrssproject.model.FeedItem;
+import com.hoka.readrssproject.model.SaveUrlItem;
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.support.ConnectionSource;

@@ -1,6 +1,9 @@
-package com.hoka.readrssproject.Adapter;
+package com.hoka.readrssproject.database;
 
 import android.content.Context;
+
+import com.hoka.readrssproject.model.FeedItem;
+import com.hoka.readrssproject.model.SaveUrlItem;
 
 import java.sql.SQLException;
 import java.util.ArrayList;

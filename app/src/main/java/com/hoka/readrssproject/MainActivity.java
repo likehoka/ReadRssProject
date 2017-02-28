@@ -8,7 +8,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.hoka.readrssproject.Adapter.NewsAdapter;
+import com.hoka.readrssproject.adapter.NewsAdapter;
 
 public class MainActivity extends AppCompatActivity {
 

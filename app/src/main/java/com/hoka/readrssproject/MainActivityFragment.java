@@ -10,63 +10,63 @@ import android.view.ViewGroup;
 
 import com.arellomobile.mvp.MvpAppCompatFragment;
 import com.arellomobile.mvp.presenter.InjectPresenter;
-import com.hoka.readrssproject.Adapter.DatabaseHelper;
-import com.hoka.readrssproject.Adapter.DatabaseManager;
-import com.hoka.readrssproject.Adapter.FeedItem;
-import com.hoka.readrssproject.Adapter.NewsAdapter;
-import com.hoka.readrssproject.Adapter.ReadRss;
-import com.hoka.readrssproject.Adapter.SaveUrlItem;
-import com.hoka.readrssproject.Adapter.VerticalSpace;
 import com.hoka.readrssproject.View.IMainActivity;
+import com.hoka.readrssproject.adapter.NewsAdapter;
+import com.hoka.readrssproject.database.DatabaseManager;
+import com.hoka.readrssproject.model.FeedItem;
+import com.hoka.readrssproject.model.SaveUrlItem;
 import com.hoka.readrssproject.presenter.PresenterMainActivity;
-import com.j256.ormlite.android.apptools.OpenHelperManager;
+import com.hoka.readrssproject.utils.ReadRss;
+import com.hoka.readrssproject.utils.VerticalSpace;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class MainActivityFragment extends MvpAppCompatFragment implements SwipeRefreshLayout.OnRefreshListener,
-        IMainActivity{
+        IMainActivity {
     @InjectPresenter
     PresenterMainActivity mPresenterMainActivity;
+    @BindView(R.id.recyclerview)
+    RecyclerView recyclerview;
+    @BindView(R.id.swipe_refresh_layout)
+    SwipeRefreshLayout swipeRefreshLayout;
 
-    private DatabaseHelper databaseHelper = null;
 
-    private SwipeRefreshLayout mSwipeRefreshLayout;
-    private RecyclerView mRecyclerView; //назначаем переменную к content_main.xml recyclerView
     private LinearLayoutManager mLinearLayoutManager;
     private NewsAdapter mAdapter;
     private List<FeedItem> mList;
     private List<SaveUrlItem> mListUrl;
     private ArrayList<FeedItem> mListAdapter;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.fragment_main, container, false);
+        ButterKnife.bind(this, view);
         DatabaseManager.init(getContext());
-        mRecyclerView = (RecyclerView)view.findViewById(R.id.recyclerview);
-        mLinearLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         mAdapter = new NewsAdapter();
-        mRecyclerView.setAdapter(mAdapter);
-        mSwipeRefreshLayout = (SwipeRefreshLayout)view.findViewById(R.id.swipe_refresh_layout);
+        recyclerview.setAdapter(mAdapter);
         mListUrl = new ArrayList<>(DatabaseManager.getInstance().getAllSaveUrlItem());
         if (mListUrl.size() != 0) {
             mPresenterMainActivity.showRecyclerDate(mListUrl.get(0).getUrl().toString());
         }
-        mRecyclerView.setLayoutManager(mLinearLayoutManager);
-        //Добавляем отступы экрана новости(слева, справа, снизу, сверху)
-        mRecyclerView.addItemDecoration(new VerticalSpace(25));
-        mSwipeRefreshLayout.setOnRefreshListener(this);
+        recyclerview.addItemDecoration(new VerticalSpace(25));
+        swipeRefreshLayout.setOnRefreshListener(this);
         return view;
     }
 
+
     @Override
     public void onRefresh() {
-        mSwipeRefreshLayout.setRefreshing(true);
+        swipeRefreshLayout.setRefreshing(true);
         if (mListUrl.size() != 0) {
             mPresenterMainActivity.showRecyclerDate(mListUrl.get(0).getUrl().toString());
         }
-        mSwipeRefreshLayout.setRefreshing(false);
+        swipeRefreshLayout.setRefreshing(false);
     }
 
 
@@ -84,22 +84,15 @@ public class MainActivityFragment extends MvpAppCompatFragment implements SwipeR
     public void showRecyclerViewDate(String s) {
         mList = new ArrayList<>(DatabaseManager.getInstance().getQueryForEqFeedItem("url", s));
         mListAdapter = new ArrayList<FeedItem>();
-        if (mList.size()==0) {
-            ReadRss readRss = new ReadRss(getActivity(), mRecyclerView, mAdapter, s);
+        if (mList.size() == 0) {
+            ReadRss readRss = new ReadRss(getActivity(), recyclerview, mAdapter, s);
             readRss.execute();
         }
-        if(mList != null) {
-            for (int i = mList.size()-1; i > -1; i--) {
+        if (mList != null) {
+            for (int i = mList.size() - 1; i > -1; i--) {
                 mListAdapter.add(mList.get(i));
             }
         }
         mAdapter.setAdapterList(mListAdapter);
-    }
-
-    private DatabaseHelper getHelper() {
-        if (databaseHelper == null) {
-            databaseHelper = OpenHelperManager.getHelper(getActivity(), DatabaseHelper.class);
-        }
-        return databaseHelper;
     }
 }
