@@ -7,6 +7,7 @@ import com.hoka.readrssproject.View.IDetailsActivity;
 
 @InjectViewState
 public class DetailsActivityPresenter extends MvpPresenter<IDetailsActivity> {
+
     public void showDetails(FeedItem mFeedItem) {
         getViewState().showDetails(mFeedItem);
     }

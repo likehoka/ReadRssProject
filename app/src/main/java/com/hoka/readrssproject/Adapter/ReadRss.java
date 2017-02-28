@@ -50,7 +50,6 @@ public class ReadRss extends AsyncTask<Void, Void, Void> {
         this.adapter = adapter;
         progressDialog = new ProgressDialog(context);
         progressDialog.setMessage("Loading...");
-
     }
 
     private DatabaseHelper getHelper() {
@@ -76,7 +75,6 @@ public class ReadRss extends AsyncTask<Void, Void, Void> {
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-
         progressDialog = new ProgressDialog(context);
         progressDialog.setMessage("Downloading content, please wait...");
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
@@ -114,7 +112,6 @@ public class ReadRss extends AsyncTask<Void, Void, Void> {
 
     public void creatBase(ArrayList<FeedItem> feed){
         FeedItem feedItem = new FeedItem();
-
         for (int i = feed.size()-1; i > -1; i--){
             feedItem = feed.get(i);
             try {
@@ -125,8 +122,6 @@ public class ReadRss extends AsyncTask<Void, Void, Void> {
             }
             adapter.add(0, feed.get(i));
         }
-
-
     }
 
     private void ProcessXml(Document data) {
@@ -137,7 +132,6 @@ public class ReadRss extends AsyncTask<Void, Void, Void> {
             Node channel = root.getChildNodes().item(1);
             NodeList items=channel.getChildNodes();
             for (int i=0; i<items.getLength();i++){
-
                 Node cureentchild=items.item(i);
                 if (cureentchild.getNodeName().equals("item")){
                     BaseStatus=false; //меняет свое значение на true если считываемая запись в базе уже есть

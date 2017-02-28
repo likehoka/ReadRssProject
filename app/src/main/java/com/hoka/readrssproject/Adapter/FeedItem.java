@@ -8,7 +8,6 @@ import java.io.Serializable;
 
 @DatabaseTable(tableName = "all_news")
 public class FeedItem implements Serializable {
-
     public static final String COLUMN_ID = "id";
     public static final String COLUMN_URL = "url";
     public static final String COLUMN_TITLE = "title";

@@ -30,9 +30,6 @@ public class BlankDetails extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         setRetainInstance(true);
-
-
-
         View view = inflater.inflate(R.layout.fragment_blank_details, container, false);
         Title = (TextView)view.findViewById(R.id.frag_title_text);
         Title.setText(title);
@@ -55,7 +52,6 @@ public class BlankDetails extends Fragment {
             DateLocal.setText(datelocal);
         }
 
-        //DateLocal.setText(datelocal);
         Thumbnail = (ImageView)view.findViewById(R.id.frag_thumb_img);
         Thumbnail.setImageBitmap(thumbnail);
         Thumbnail.setOnClickListener(new View.OnClickListener() {

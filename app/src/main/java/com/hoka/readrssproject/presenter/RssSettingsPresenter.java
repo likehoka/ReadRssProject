@@ -32,13 +32,11 @@ public class RssSettingsPresenter extends MvpPresenter<IRssSettingsActivity> {
                     flag = false;
                 } else flag = true;
                 return null;
-
             }
 
             @Override
             protected void onPostExecute(Void aVoid) {
                 super.onPostExecute(aVoid);
-
                 if (flag){
                     getViewState().showMainActivity();
                 }else {
@@ -80,7 +78,6 @@ public class RssSettingsPresenter extends MvpPresenter<IRssSettingsActivity> {
                                     if(feedItems.size()>0){
                                         ok = true;
                                     } count++;
-
                                 }
                             }
                         } while (count == 0);

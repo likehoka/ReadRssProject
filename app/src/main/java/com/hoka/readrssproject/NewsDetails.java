@@ -8,7 +8,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class NewsDetails extends Activity {
-
     @BindView(R.id.webview)
     WebView webview;
 

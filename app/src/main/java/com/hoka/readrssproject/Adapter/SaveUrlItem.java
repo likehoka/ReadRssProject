@@ -8,7 +8,6 @@ import java.io.Serializable;
 
 @DatabaseTable(tableName = "url_item")
 public class SaveUrlItem implements Serializable {
-
     public static final String COLUMN_ID = "id";
     public static final String COLUMN_URL = "url";
 

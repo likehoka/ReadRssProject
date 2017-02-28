@@ -29,7 +29,6 @@ import java.util.Locale;
  */
 
 public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-
     private List<FeedItem> mList;
     //переменная gadget отвечает за открытие нового активити если приложение работает на телефоне
     //либо в планшете: false - телефон, true - планшет

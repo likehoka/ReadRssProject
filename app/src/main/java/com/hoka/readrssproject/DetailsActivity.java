@@ -25,14 +25,9 @@ public class DetailsActivity extends MvpAppCompatActivity implements IDetailsAct
     @InjectPresenter
     DetailsActivityPresenter mDetailsActivityPresenter;
 
-
-
-    //***************
-    //Элементы заполнения View элементов экрана
     TextView mTitle, mDescription, mDate, mLink;
     ImageView mThumbnail;
     ScrollView mScrollView;
-    //***************
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,8 +38,6 @@ public class DetailsActivity extends MvpAppCompatActivity implements IDetailsAct
         mDescription = (TextView)findViewById(R.id.details_description_text);
         mDate = (TextView)findViewById(R.id.details_date_text);
         mScrollView = (ScrollView) findViewById(R.id.details_scrollView);
-
-
         mThumbnail = (ImageView)findViewById(R.id.details_thumb_img);
 
         mDetailsActivityPresenter.showDetails(mFeedItem);

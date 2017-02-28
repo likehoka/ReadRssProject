@@ -25,7 +25,6 @@ import butterknife.OnClick;
 public class RssSettingsActivity extends MvpAppCompatActivity implements IRssSettingsActivity {
     @InjectPresenter
     RssSettingsPresenter rssSettingsPresenter;
-
     private DatabaseHelper mDatabaseHelper = null;
 
     @BindView(R.id.edit_text_url_name)

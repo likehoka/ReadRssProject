@@ -38,8 +38,6 @@ public class MainActivityFragment extends MvpAppCompatFragment implements SwipeR
     private List<FeedItem> mList;
     private List<SaveUrlItem> mListUrl;
     private ArrayList<FeedItem> mListAdapter;
-    private ArrayList<SaveUrlItem> mListAllUrl;
-    private static Bundle mBundleRecyclerViewState=null;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -51,12 +49,10 @@ public class MainActivityFragment extends MvpAppCompatFragment implements SwipeR
         mAdapter = new NewsAdapter();
         mRecyclerView.setAdapter(mAdapter);
         mSwipeRefreshLayout = (SwipeRefreshLayout)view.findViewById(R.id.swipe_refresh_layout);
-
         mListUrl = new ArrayList<>(DatabaseManager.getInstance().getAllSaveUrlItem());
         if (mListUrl.size() != 0) {
             mPresenterMainActivity.showRecyclerDate(mListUrl.get(0).getUrl().toString());
         }
-
         mRecyclerView.setLayoutManager(mLinearLayoutManager);
         //Добавляем отступы экрана новости(слева, справа, снизу, сверху)
         mRecyclerView.addItemDecoration(new VerticalSpace(25));

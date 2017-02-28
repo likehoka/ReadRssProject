@@ -6,7 +6,6 @@ import android.view.View;
 
 public class VerticalSpace extends RecyclerView.ItemDecoration {
     int Space;
-
     public VerticalSpace(int Space){
         this.Space=Space;
     }
