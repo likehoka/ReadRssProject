@@ -1,7 +1,5 @@
 package com.hoka.readrssproject.presenter;
 
-import android.os.Bundle;
-
 import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
 import com.hoka.readrssproject.View.IMainActivity;
@@ -14,8 +12,5 @@ public class PresenterMainActivity extends MvpPresenter<IMainActivity> {
         getViewState().showRecyclerViewDate();
     }
 
-    public void showRecyclerState(Bundle mBundleRecyclerViewState) {
-        getViewState().showRecyclerViewState(mBundleRecyclerViewState);
-    }
 
 }

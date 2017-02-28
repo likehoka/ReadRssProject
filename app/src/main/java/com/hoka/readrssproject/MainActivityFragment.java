@@ -1,7 +1,6 @@
 package com.hoka.readrssproject;
 
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -38,7 +37,6 @@ public class MainActivityFragment extends MvpAppCompatFragment implements SwipeR
         View view = inflater.inflate(R.layout.fragment_main, container, false);
         DatabaseManager.init(getContext());
         mRecyclerView = (RecyclerView)view.findViewById(R.id.recyclerview);
-        //20.02.2017 14^59
         mLinearLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         mAdapter = new NewsAdapter();
         mRecyclerView.setAdapter(mAdapter);
@@ -73,19 +71,12 @@ public class MainActivityFragment extends MvpAppCompatFragment implements SwipeR
     }
 */
 
-    @Override
-    public void showRecyclerViewState(Bundle mBundleRecyclerViewState) {
-        if (mBundleRecyclerViewState != null) {
-            Parcelable listState = mBundleRecyclerViewState.getParcelable("recycler_state");
-            mRecyclerView.getLayoutManager().onRestoreInstanceState(listState);
-        }
-    }
 
     @Override
     public void showRecyclerViewDate() {
         mList = new ArrayList<>(DatabaseManager.getInstance().getAllFeedItem());
         mListAdapter = new ArrayList<FeedItem>();
-        if (mList == null) {
+        if (mList.size()==0) {
             ReadRss readRss = new ReadRss(getActivity(), mRecyclerView, mAdapter);
             readRss.execute();
         }

@@ -30,6 +30,11 @@ import java.util.Locale;
 
 public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
+
+    private TextView text_title, text_description, text_date;
+    private ImageView image_thumbnail;
+    private CardView cardView;
+
     private List<FeedItem> mList;
     //переменная gadget отвечает за открытие нового активити если приложение работает на телефоне
     //либо в планшете: false - телефон, true - планшет
@@ -68,10 +73,9 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         notifyDataSetChanged();
     }
 
+
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        TextView text_title, text_description, text_date;
-        ImageView image_thumbnail;
-        CardView cardView;
+
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -91,10 +95,11 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             }
         }
 
+
+
         public void setItemName(final FeedItem feed) {
             text_title.setText(feed.getTitle());
             //Description.setText(feed.getDescription());
-
             try{
                 text_description.setText(Html.fromHtml(feed.getDescription()));
             } catch (NullPointerException e){
@@ -145,11 +150,7 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                         ft.beginTransaction().replace(R.id.fragmentBlankDetails, blankDetails).commit();
                     } else {
                         Intent intent = new Intent(itemView.getContext(), DetailsActivity.class);
-                        intent.putExtra("Title", feed.getTitle());
-                        intent.putExtra("Description", feed.getDescription());
-                        intent.putExtra("Date", feed.getDate());
-                        intent.putExtra("Thumbnail", feed.getImage());
-                        intent.putExtra("Link", feed.getLink());
+                        intent.putExtra("DelaisActivity", feed);
                         itemView.getContext().startActivity(intent);
                     }
                 }
@@ -159,5 +160,6 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         @Override
         public void onClick(View view) {
         }
+
     }
 }
