@@ -39,15 +39,8 @@ public class DetailsActivity extends MvpAppCompatActivity implements IDetailsAct
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details);
         final FeedItem mFeedItem = (FeedItem) getIntent().getSerializableExtra("DelaisActivity");
-        //final FeedItem mFeedItem = (FeedItem) getIntent().getSerializableExtra("DelaisActivity");
-
-        //final Bundle bundle=getIntent().getExtras();
         mTitle = (TextView)findViewById(R.id.details_title_text);
-        //Title.setText(bundle.getString("Title"));
-        //mTitle.setText(mFeedItem.getTitle());
         mDescription = (TextView)findViewById(R.id.details_description_text);
-        //Description.setText(Html.fromHtml(bundle.getString("Description")));
-        //mDescription.setText(Html.fromHtml(mFeedItem.getDescription()));
         mDate = (TextView)findViewById(R.id.details_date_text);
         mScrollView = (ScrollView) findViewById(R.id.details_scrollView);
 
@@ -72,7 +65,6 @@ public class DetailsActivity extends MvpAppCompatActivity implements IDetailsAct
         mDescription.setText(Html.fromHtml(mFeedItem.getDescription()));
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("E, dd MMM yyy HH:mm:ss zzz",Locale.ENGLISH);
         try {
-            //java.util.Date date = simpleDateFormat.parse(bundle.getString("Date"));
             java.util.Date date = simpleDateFormat.parse(mFeedItem.getDate().toString());
             SimpleDateFormat print;
 
@@ -87,7 +79,6 @@ public class DetailsActivity extends MvpAppCompatActivity implements IDetailsAct
             mDate.setText(mFeedItem.getDate().toString());
         }
         try{
-            //mThumbnail.setImageBitmap(BitmapFactory.decodeByteArray(bundle.getByteArray("Thumbnail"),0,bundle.getByteArray("Thumbnail").length));
             mThumbnail.setImageBitmap(BitmapFactory.decodeByteArray(mFeedItem.getImage(),0,mFeedItem.getImage().length));
         }
         catch (Exception e){

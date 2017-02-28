@@ -1,16 +1,12 @@
-package com.hoka.readrssproject;
+package com.hoka.readrssproject.Adapter;
 
 import android.app.ProgressDialog;
-import android.content.ContentValues;
 import android.content.Context;
-import android.database.Cursor;
 import android.os.AsyncTask;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.widget.Toast;
 
-import com.hoka.readrssproject.Adapter.DatabaseHelper;
-import com.hoka.readrssproject.Adapter.FeedItem;
-import com.hoka.readrssproject.Adapter.NewsAdapter;
 import com.j256.ormlite.android.apptools.OpenHelperManager;
 import com.j256.ormlite.dao.Dao;
 
@@ -33,38 +29,26 @@ import javax.xml.parsers.DocumentBuilderFactory;
 
 public class ReadRss extends AsyncTask<Void, Void, Void> {
     Context context;
-    //*******************************************
 
     private DatabaseHelper databaseHelper = null;
     private Dao<FeedItem, Integer> feedItemIntegerDao;
     private ArrayList<FeedItem> feedItems; //объявляем для хранения записей
 
-
-    //*******************************************
-
-
-    //SQLiteDatabase database; //основная база в которой будут храниться все записи
-    //SQLiteDatabase cashdatabase; // база кэш, в которую поступают новые сообщения
-    //DBHelper dbHelper; //основная база в которой будут храниться все записи
-    //CashDBHelper cashDBHelper;// база кэш, в которую поступают новые сообщения
-    Cursor cursor;
     boolean BaseStatus=false;
     boolean Updater = false;
-    ContentValues contentValues;
     public static Boolean ProcessReadrss=false;
     private ProgressDialog progressDialog;
-    URL url;
-    //ArrayList<FeedItem> feedItems; //объявляем для хранения записей
+    private URL url;
     RecyclerView recyclerView;
-    //String address = "https://news.mail.ru/rss/sport/boxing/";
-    String address = "http://www.sciencemag.org/rss/news_current.xml";
+    static String sAdressURL="";
     NewsAdapter adapter;
 
-    public ReadRss(Context context, RecyclerView recyclerView, NewsAdapter adapter){
-        this.recyclerView=recyclerView;
-        this.context=context;
-        this.adapter=adapter;
-        progressDialog=new ProgressDialog(context);
+    public ReadRss(Context context, RecyclerView recyclerView, NewsAdapter adapter, String sAdressURL){
+        this.sAdressURL = sAdressURL;
+        this.recyclerView = recyclerView;
+        this.context = context;
+        this.adapter = adapter;
+        progressDialog = new ProgressDialog(context);
         progressDialog.setMessage("Loading...");
 
     }
@@ -82,6 +66,7 @@ public class ReadRss extends AsyncTask<Void, Void, Void> {
             ProcessXml(Getdata());
         }
         else {
+            Toast.makeText(context, "Ошибка при проверке загружаемого документа", Toast.LENGTH_SHORT).show();
             Log.d("mLog", "Ошибка");
             Updater=true;}
 
@@ -103,12 +88,10 @@ public class ReadRss extends AsyncTask<Void, Void, Void> {
     @Override
     protected void onPostExecute(Void aVoid) {
         super.onPostExecute(aVoid);
-
-        this.progressDialog.dismiss();
         ProcessReadrss=true;
         creatBase(feedItems);
-
-
+        recyclerView.scrollToPosition(0);
+        this.progressDialog.dismiss();
     }
 
     private byte[] getLogoImage(String url){
@@ -135,7 +118,6 @@ public class ReadRss extends AsyncTask<Void, Void, Void> {
         for (int i = feed.size()-1; i > -1; i--){
             feedItem = feed.get(i);
             try {
-
                 Dao<FeedItem, Integer> feedDao = getHelper().getFeedItemDao();
                 feedDao.create(feedItem);
             } catch (SQLException e) {
@@ -144,12 +126,13 @@ public class ReadRss extends AsyncTask<Void, Void, Void> {
             adapter.add(0, feed.get(i));
         }
 
+
     }
 
     private void ProcessXml(Document data) {
 
         if(data != null){
-            feedItems=new ArrayList<>(); //объявляем для хранения записей
+            feedItems=new ArrayList<>();
             Element root = data.getDocumentElement();
             Node channel = root.getChildNodes().item(1);
             NodeList items=channel.getChildNodes();
@@ -165,6 +148,7 @@ public class ReadRss extends AsyncTask<Void, Void, Void> {
                         Node cureent= itemchilds.item(j);
                         ArrayList<FeedItem> daoList = null;
                         if(cureent.getNodeName().equals("title")){
+
                             try {
                                 feedItemIntegerDao = getHelper().getFeedItemDao();
                                 daoList = (ArrayList<FeedItem>) feedItemIntegerDao.queryForEq("title", cureent.getTextContent());
@@ -173,10 +157,10 @@ public class ReadRss extends AsyncTask<Void, Void, Void> {
                             }
 
                             if (daoList.size() > 0) {
-
                                 BaseStatus=true;
                             }
-                            if (BaseStatus==false){
+
+                            if (BaseStatus==false){ //+
                                 item.setTitle(cureent.getTextContent());
                             }
 
@@ -199,9 +183,9 @@ public class ReadRss extends AsyncTask<Void, Void, Void> {
                     }
 
                     if(BaseStatus==false){
+                        item.setUrl(sAdressURL);
                         feedItems.add(item); //Запись значений в ArrayList
                     }
-
                 }
             }
         }
@@ -210,7 +194,7 @@ public class ReadRss extends AsyncTask<Void, Void, Void> {
 
     public Document Getdata(){
         try {
-            url = new URL(address);
+            url = new URL(sAdressURL);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
             InputStream inputStream=connection.getInputStream();

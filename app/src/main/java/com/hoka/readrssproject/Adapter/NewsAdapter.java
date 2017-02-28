@@ -30,18 +30,13 @@ import java.util.Locale;
 
 public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-
-    private TextView text_title, text_description, text_date;
-    private ImageView image_thumbnail;
-    private CardView cardView;
-
     private List<FeedItem> mList;
     //переменная gadget отвечает за открытие нового активити если приложение работает на телефоне
     //либо в планшете: false - телефон, true - планшет
     //значение gadget задается в MainActivity, если при загрузке виден фрагмент в layout-large
     //то приложение открывает информацию для просмотра во фрагменте, иначе открытие происходит в телефоне
     //с загрузкой DetailsActivity для предварительного просмотра записи
-    public static Boolean mGadget=false;
+    public static Boolean mGadget = false;
 
     public NewsAdapter() {
         mList = new ArrayList<>();
@@ -73,9 +68,10 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         notifyDataSetChanged();
     }
 
-
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-
+        TextView text_title, text_description, text_date;
+        ImageView image_thumbnail;
+        CardView cardView;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -95,11 +91,8 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             }
         }
 
-
-
         public void setItemName(final FeedItem feed) {
             text_title.setText(feed.getTitle());
-            //Description.setText(feed.getDescription());
             try{
                 text_description.setText(Html.fromHtml(feed.getDescription()));
             } catch (NullPointerException e){
@@ -120,9 +113,6 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 exc.printStackTrace();
                 text_date.setText(feed.getDate());
             }
-
-
-            //Date.setText(feed.getPubDate());
             try{
                 image_thumbnail.setImageBitmap(BitmapFactory.decodeByteArray(feed.getImage(),0,feed.getImage().length));
             }

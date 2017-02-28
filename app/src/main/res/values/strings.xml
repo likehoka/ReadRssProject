@@ -4,4 +4,7 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="enter_url_rss">Enter URL RSS</string>
+    <string name="text_example">http://www.sciencemag.org/rss/news_current.xml</string>
+    <string name="open_url">Open URL</string>
 </resources>

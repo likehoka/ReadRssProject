@@ -8,8 +8,8 @@ import com.hoka.readrssproject.View.IMainActivity;
 @InjectViewState
 public class PresenterMainActivity extends MvpPresenter<IMainActivity> {
 
-    public void showRecyclerDate(){
-        getViewState().showRecyclerViewDate();
+    public void showRecyclerDate(String s){
+        getViewState().showRecyclerViewDate(s);
     }
 
 

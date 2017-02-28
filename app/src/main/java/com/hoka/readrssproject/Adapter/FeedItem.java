@@ -10,6 +10,7 @@ import java.io.Serializable;
 public class FeedItem implements Serializable {
 
     public static final String COLUMN_ID = "id";
+    public static final String COLUMN_URL = "url";
     public static final String COLUMN_TITLE = "title";
     public static final String COLUMN_DATE = "date";
     public static final String COLUMN_AUTHOR = "author";
@@ -20,6 +21,9 @@ public class FeedItem implements Serializable {
 
     @DatabaseField(columnName = COLUMN_ID, generatedId = true)
     private int id;
+
+    @DatabaseField(columnName = COLUMN_URL, dataType = DataType.STRING)
+    private String url;
 
     @DatabaseField(columnName = COLUMN_TITLE)
     private String title;
@@ -48,6 +52,14 @@ public class FeedItem implements Serializable {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 
     public String getTitle() {
@@ -108,7 +120,8 @@ public class FeedItem implements Serializable {
 
     }
 
-    public FeedItem(String title, String date, String author, byte[] image, String description, String link, String content) {
+    public FeedItem(String url, String title, String date, String author, byte[] image, String description, String link, String content) {
+        this.url = url;
         this.title = title;
         this.date = date;
         this.author = author;

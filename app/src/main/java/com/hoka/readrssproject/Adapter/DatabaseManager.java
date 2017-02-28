@@ -28,6 +28,7 @@ public class DatabaseManager {
 
     public DatabaseHelper getHelper() { return helper; }
 
+
     public List<FeedItem> getAllFeedItem() {
         List<FeedItem> feeditem = null;
         try {
@@ -38,21 +39,39 @@ public class DatabaseManager {
         return feeditem;
     }
 
-    public ArrayList<FeedItem> getQueryForEq(String param, String text){
+
+
+    public ArrayList<FeedItem> getQueryForEqFeedItem(String nameTable, String param){
         ArrayList<FeedItem> feedItems = null;
         try {
-            feedItems = (ArrayList<FeedItem>) getHelper().getFeedItemDao().queryForEq(param, text);
+            feedItems = (ArrayList<FeedItem>) getHelper().getFeedItemDao().queryForEq(nameTable, param);
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return feedItems;
     }
 
-
+    public ArrayList<SaveUrlItem> getQueryForEqSaveUrlItem(String nameTable, String param) {
+        ArrayList<SaveUrlItem> saveUrlItems = null;
+        try {
+            saveUrlItems = (ArrayList<SaveUrlItem>) getHelper().getSaveUrlItemDao().queryForEq(nameTable, param);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return saveUrlItems;
+    }
 
     public void addFeedItem(FeedItem feeditem) {
         try {
             getHelper().getFeedItemDao().create(feeditem);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void addSaveUrlItem(SaveUrlItem saveUrlItem) {
+        try {
+            getHelper().getSaveUrlItemDao().create(saveUrlItem);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -66,6 +85,35 @@ public class DatabaseManager {
         }
     }
 
+    public List<SaveUrlItem> getAllSaveUrlItem() {
+        List<SaveUrlItem> saveUrlItem = null;
+        try {
+            saveUrlItem = (ArrayList<SaveUrlItem>) getHelper().getSaveUrlItemDao().queryForAll();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return saveUrlItem;
+    }
+
+
+
+
+    public void deleteSaveUrlItem() {
+        try {
+            getHelper().getSaveUrlItemDao().delete(getAllSaveUrlItem());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void refreshSaveUrlItem(SaveUrlItem saveUrlItem) {
+        try {
+            getHelper().getSaveUrlItemDao().refresh(saveUrlItem);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void updateFeedItem(FeedItem wishList) {
         try {
             getHelper().getFeedItemDao().update(wishList);
@@ -74,9 +122,36 @@ public class DatabaseManager {
         }
     }
 
+    public void updateSaveUrlItem(SaveUrlItem wishList) {
+        try {
+            getHelper().getSaveUrlItemDao().update(wishList);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void deleteFeedItem(int id) {
         try {
             DeleteBuilder<FeedItem, Integer> deleteBuilder = getHelper().getFeedItemDao().deleteBuilder();
+            deleteBuilder.where().eq("id", id);
+            deleteBuilder.delete();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void deleteSaveUrl(){
+        try {
+            DeleteBuilder<SaveUrlItem, Integer> deleteBuilder = getHelper().getSaveUrlItemDao().deleteBuilder();
+            deleteBuilder.delete();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void deleteSaveUrlItem(int id) {
+        try {
+            DeleteBuilder<SaveUrlItem, Integer> deleteBuilder = getHelper().getSaveUrlItemDao().deleteBuilder();
             deleteBuilder.where().eq("id", id);
             deleteBuilder.delete();
         } catch (SQLException e) {
