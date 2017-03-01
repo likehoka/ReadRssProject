@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.os.Build;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -22,28 +23,33 @@ import com.hoka.readrssproject.model.FeedItem;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * Created by hoka on 28.02.2017.
  */
 
 public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+
     private List<FeedItem> mList;
     //переменная gadget отвечает за открытие нового активити если приложение работает на телефоне
     //либо в планшете: false - телефон, true - планшет
-    //значение gadget задается в MainActivity, если при загрузке виден фрагмент в layout-large
+    //значение sGadget задается в MainActivity, если при загрузке виден фрагмент в layout-large
     //то приложение открывает информацию для просмотра во фрагменте, иначе открытие происходит в телефоне
     //с загрузкой DetailsActivity для предварительного просмотра записи
-    public static Boolean mGadget = false;
+    public static Boolean sGadget = false;
 
     public NewsAdapter() {
         mList = new ArrayList<>();
     }
 
     @Override
-    public NewsAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) { //норм
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.custum_row_news_item, parent, false);
         return new ViewHolder(view);
     }
@@ -69,18 +75,21 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        TextView text_title, text_description, text_date;
-        ImageView image_thumbnail;
-        CardView cardView;
+
+        @BindView(R.id.textview_custum_row_news_item_date_text)
+        TextView textDate;
+        @BindView(R.id.imageview_custum_row_news_item_thumb_img)
+        ImageView imageThumb;
+        @BindView(R.id.textview_custum_row_news_item_description_text)
+        TextView textDescription;
+        @BindView(R.id.textview_custum_row_news_item_title_text)
+        TextView textTitle;
+        @BindView(R.id.cardview_custum_row_news_item)
+        CardView cardview;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            text_title = (TextView) itemView.findViewById(R.id.title_text);
-            text_description = (TextView) itemView.findViewById(R.id.description_text);
-            text_date = (TextView) itemView.findViewById(R.id.date_text);
-            image_thumbnail = (ImageView) itemView.findViewById(R.id.thumb_img);
-            cardView = (CardView) itemView.findViewById(R.id.cardview);
-            cardView.setOnClickListener(this);
+            ButterKnife.bind(this, itemView);
         }
 
         public Locale getCurrentLocale(Context context) {
@@ -92,40 +101,39 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         }
 
         public void setItemName(final FeedItem feed) {
-            text_title.setText(feed.getTitle());
-            try{
-                text_description.setText(Html.fromHtml(feed.getDescription()));
-            } catch (NullPointerException e){
-                text_description.setText("");
-            }
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("E, dd MMM yyy HH:mm:ss zzz",Locale.ENGLISH);
+            textTitle.setText(feed.getTitle());
             try {
-                java.util.Date date = simpleDateFormat.parse(feed.getDate());
+                textDescription.setText(Html.fromHtml(feed.getDescription()));
+            } catch (NullPointerException e) {
+                textDescription.setText("");
+            }
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("E, dd MMM yyy HH:mm:ss zzz", Locale.ENGLISH);
+            try {
+                Date date = simpleDateFormat.parse(feed.getDate());
                 SimpleDateFormat print;
-                if (getCurrentLocale(itemView.getContext())==Locale.ENGLISH) {
-                    print = new SimpleDateFormat("E, dd MMM yyy HH:mm a",Locale.ENGLISH);
+                if (getCurrentLocale(itemView.getContext()) == Locale.ENGLISH) {
+                    print = new SimpleDateFormat("E, dd MMM yyy HH:mm a", Locale.ENGLISH);
                 } else {
-                    print = new SimpleDateFormat("E, dd MMM yyy HH:mm z",getCurrentLocale(itemView.getContext()));
+                    print = new SimpleDateFormat("E, dd MMM yyy HH:mm z", getCurrentLocale(itemView.getContext()));
                 }
-                text_date.setText(print.format(date));
+                textDate.setText(print.format(date));
 
-            } catch (ParseException exc){
+            } catch (ParseException exc) {
                 exc.printStackTrace();
-                text_date.setText(feed.getDate());
+                textDate.setText(feed.getDate());
             }
-            try{
-                image_thumbnail.setImageBitmap(BitmapFactory.decodeByteArray(feed.getImage(),0,feed.getImage().length));
-            }
-            catch (Exception e){
-                image_thumbnail.setImageResource(R.drawable.news);
+            try {
+                imageThumb.setImageBitmap(BitmapFactory.decodeByteArray(feed.getImage(), 0, feed.getImage().length));
+            } catch (Exception e) {
+                imageThumb.setImageResource(R.drawable.news);
             }
 
-            final NewsAdapter.ViewHolder holder = new ViewHolder(itemView);
+            final ViewHolder holder = new ViewHolder(itemView);
 
-            cardView.setOnClickListener(new View.OnClickListener() {
+            cardview.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (mGadget == true) {
+                    if (sGadget) {
                         BlankDetails blankDetails = new BlankDetails();
                         blankDetails.setTitle(feed.getTitle());
                         blankDetails.setDescription(feed.getDescription());
@@ -136,7 +144,7 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                         } catch (Exception e) {
                             blankDetails.setThumbnail(BitmapFactory.decodeResource(itemView.getContext().getResources(), R.drawable.news));
                         }
-                        android.support.v4.app.FragmentManager ft = ((AppCompatActivity) itemView.getContext()).getSupportFragmentManager();
+                        FragmentManager ft = ((AppCompatActivity) itemView.getContext()).getSupportFragmentManager();
                         ft.beginTransaction().replace(R.id.fragmentBlankDetails, blankDetails).commit();
                     } else {
                         Intent intent = new Intent(itemView.getContext(), DetailsActivity.class);

@@ -33,7 +33,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 public class ReadRss extends AsyncTask<Void, Void, Void> {
     private Context mContext;
 
-    private DatabaseHelper mDatabaseHelper = null;
+    private DatabaseHelper mDatabaseHelper = OpenHelperManager.getHelper(mContext, DatabaseHelper.class);;
     private Dao<FeedItem, Integer> mFeedItemIntegerDao;
     private ArrayList<FeedItem> mArrayListFeedItems; //объявляем для хранения записей
 
@@ -53,23 +53,15 @@ public class ReadRss extends AsyncTask<Void, Void, Void> {
         mProgressDialog.setMessage("Loading...");
     }
 
-    private DatabaseHelper getHelper() {
-        if (mDatabaseHelper == null) {
-            mDatabaseHelper = OpenHelperManager.getHelper(mContext, DatabaseHelper.class);
-        }
-        return mDatabaseHelper;
-    }
-
     @Override
     protected Void doInBackground(Void... voids) {
-        if (Getdata()!=null){
+        if (Getdata()!=null && !isCancelled()){
             ProcessXml(Getdata());
         }
         else {
             Toast.makeText(mContext, "Ошибка при проверке загружаемого документа", Toast.LENGTH_SHORT).show();
             Log.d("mLog", "Ошибка");
             }
-
         return null;
     }
 
@@ -91,6 +83,13 @@ public class ReadRss extends AsyncTask<Void, Void, Void> {
         recyclerView.scrollToPosition(0);
         this.mProgressDialog.dismiss();
     }
+
+    @Override
+    protected void onCancelled(Void aVoid) {
+        super.onCancelled(aVoid);
+        this.mProgressDialog.dismiss();
+    }
+
 
     private byte[] getLogoImage(String url){
         try{
@@ -115,7 +114,7 @@ public class ReadRss extends AsyncTask<Void, Void, Void> {
         for (int i = feed.size()-1; i > -1; i--){
             feedItem = feed.get(i);
             try {
-                Dao<FeedItem, Integer> feedDao = getHelper().getFeedItemDao();
+                Dao<FeedItem, Integer> feedDao = mDatabaseHelper.getFeedItemDao();
                 feedDao.create(feedItem);
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -144,7 +143,7 @@ public class ReadRss extends AsyncTask<Void, Void, Void> {
                         if(cureent.getNodeName().equals("title")){
 
                             try {
-                                mFeedItemIntegerDao = getHelper().getFeedItemDao();
+                                mFeedItemIntegerDao = mDatabaseHelper.getFeedItemDao();
                                 daoList = (ArrayList<FeedItem>) mFeedItemIntegerDao.queryForEq("title", cureent.getTextContent());
                             } catch (SQLException e) {
                                 e.printStackTrace();
@@ -183,7 +182,6 @@ public class ReadRss extends AsyncTask<Void, Void, Void> {
                 }
             }
         }
-
     }
 
     public Document Getdata(){
