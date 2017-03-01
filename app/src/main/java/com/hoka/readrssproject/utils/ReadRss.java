@@ -41,12 +41,12 @@ public class ReadRss extends AsyncTask<Void, Void, Void> {
     private boolean mBaseStatus=false;
     private ProgressDialog mProgressDialog;
     private URL mUrl;
-    RecyclerView recyclerView;
-    static String sAdressURL="";
+    private RecyclerView recyclerView;
+    private String mAdressURL="";
     private NewsAdapter mAdapter;
 
     public ReadRss(Context context, RecyclerView recyclerView, NewsAdapter adapter, String sAdressURL){
-        this.sAdressURL = sAdressURL;
+        this.mAdressURL = sAdressURL;
         this.recyclerView = recyclerView;
         this.mContext = context;
         this.mAdapter = adapter;
@@ -81,19 +81,19 @@ public class ReadRss extends AsyncTask<Void, Void, Void> {
         super.onPostExecute(aVoid);
         creatBase(mArrayListFeedItems);
         recyclerView.scrollToPosition(0);
-        this.mProgressDialog.dismiss();
+        mProgressDialog.dismiss();
     }
 
     @Override
     protected void onCancelled(Void aVoid) {
         super.onCancelled(aVoid);
-        this.mProgressDialog.dismiss();
+        mProgressDialog.dismiss();
     }
 
     @Override
     protected void onCancelled() {
         super.onCancelled();
-        this.mProgressDialog.dismiss();
+        mProgressDialog.dismiss();
     }
 
 
@@ -183,7 +183,7 @@ public class ReadRss extends AsyncTask<Void, Void, Void> {
                     }
 
                     if(mBaseStatus==false){
-                        item.setUrl(sAdressURL);
+                        item.setUrl(mAdressURL);
                         mArrayListFeedItems.add(item); //Запись значений в ArrayList
                     }
                 }
@@ -193,7 +193,7 @@ public class ReadRss extends AsyncTask<Void, Void, Void> {
 
     public Document Getdata(){
         try {
-            mUrl = new URL(sAdressURL);
+            mUrl = new URL(mAdressURL);
             HttpURLConnection connection = (HttpURLConnection) mUrl.openConnection();
             connection.setRequestMethod("GET");
             InputStream inputStream=connection.getInputStream();

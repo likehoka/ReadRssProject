@@ -26,6 +26,13 @@ import butterknife.ButterKnife;
 
 public class MainActivityFragment extends MvpAppCompatFragment implements SwipeRefreshLayout.OnRefreshListener,
         IMainActivity {
+
+    /*
+    *This MainActivityFragment refers to MainActivity,
+    *fragment used Presenter, which perform tasks and
+    *show result of the public void showRecyclerViewDate(String strNameUrl)
+    */
+
     @InjectPresenter
     PresenterMainActivity mPresenterMainActivity;
     @BindView(R.id.recycler_view_fragment_main)
@@ -48,6 +55,7 @@ public class MainActivityFragment extends MvpAppCompatFragment implements SwipeR
         mAdapter = new NewsAdapter();
         mRecyclerview.setAdapter(mAdapter);
         mListUrl = new ArrayList<>(DatabaseManager.getInstance().getAllSaveUrlItem());
+        //If
         if (mListUrl.size() != 0) {
             mPresenterMainActivity.showRecyclerDate(mListUrl.get(0).getUrl().toString());
         }

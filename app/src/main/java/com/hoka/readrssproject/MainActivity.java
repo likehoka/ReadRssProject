@@ -25,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
 
+        //condition to select phone or tablet
         View view = (View) findViewById(R.id.fragmentBlankDetails);
         if (view != null) {
             NewsAdapter adapter = new NewsAdapter();

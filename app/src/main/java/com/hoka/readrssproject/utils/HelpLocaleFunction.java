@@ -5,10 +5,6 @@ import android.os.Build;
 
 import java.util.Locale;
 
-/**
- * Created by hoka on 01.03.2017.
- */
-
 public class HelpLocaleFunction {
     private Context mContext;
 
