@@ -7,7 +7,7 @@ import android.widget.Toast;
 
 import com.arellomobile.mvp.MvpAppCompatActivity;
 import com.arellomobile.mvp.presenter.InjectPresenter;
-import com.hoka.readrssproject.View.IRssSettingsActivity;
+import com.hoka.readrssproject.view.IRssSettingsActivity;
 import com.hoka.readrssproject.database.DatabaseHelper;
 import com.hoka.readrssproject.model.SaveUrlItem;
 import com.hoka.readrssproject.presenter.RssSettingsPresenter;

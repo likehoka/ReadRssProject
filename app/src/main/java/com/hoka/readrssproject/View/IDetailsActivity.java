@@ -1,4 +1,4 @@
-package com.hoka.readrssproject.View;
+package com.hoka.readrssproject.view;
 
 import com.arellomobile.mvp.MvpView;
 import com.arellomobile.mvp.viewstate.strategy.AddToEndSingleStrategy;

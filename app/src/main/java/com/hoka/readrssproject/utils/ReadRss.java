@@ -41,15 +41,15 @@ public class ReadRss extends AsyncTask<Void, Void, Void> {
     private boolean mBaseStatus=false;
     private ProgressDialog mProgressDialog;
     private URL mUrl;
-    private RecyclerView recyclerView;
+    private RecyclerView mRecyclerView;
     private String mAdressURL="";
     private NewsAdapter mAdapter;
 
-    public ReadRss(Context context, RecyclerView recyclerView, NewsAdapter adapter, String sAdressURL){
-        this.mAdressURL = sAdressURL;
-        this.recyclerView = recyclerView;
-        this.mContext = context;
-        this.mAdapter = adapter;
+    public ReadRss(Context context, RecyclerView recyclerView, NewsAdapter adapter, String adressURL){
+        mAdressURL = adressURL;
+        mRecyclerView = recyclerView;
+        mContext = context;
+        mAdapter = adapter;
         mProgressDialog = new ProgressDialog(context);
         mProgressDialog.setMessage(mContext.getString(R.string.loading));
     }
@@ -80,7 +80,7 @@ public class ReadRss extends AsyncTask<Void, Void, Void> {
     protected void onPostExecute(Void aVoid) {
         super.onPostExecute(aVoid);
         creatBase(mArrayListFeedItems);
-        recyclerView.scrollToPosition(0);
+        mRecyclerView.scrollToPosition(0);
         mProgressDialog.dismiss();
     }
 

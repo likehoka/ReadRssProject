@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import com.arellomobile.mvp.MvpAppCompatActivity;
 import com.arellomobile.mvp.presenter.InjectPresenter;
-import com.hoka.readrssproject.View.IDetailsActivity;
+import com.hoka.readrssproject.view.IDetailsActivity;
 import com.hoka.readrssproject.model.FeedItem;
 import com.hoka.readrssproject.presenter.DetailsActivityPresenter;
 import com.hoka.readrssproject.utils.HelpLocaleFunction;

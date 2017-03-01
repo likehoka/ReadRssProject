@@ -8,7 +8,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.hoka.readrssproject.adapter.NewsAdapter;
+import com.hoka.readrssproject.utils.Constains;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -28,8 +28,7 @@ public class MainActivity extends AppCompatActivity {
         //condition to select phone or tablet
         View view = (View) findViewById(R.id.fragmentBlankDetails);
         if (view != null) {
-            NewsAdapter adapter = new NewsAdapter();
-            adapter.sGadget = true;
+            Constains.isTablet = true;
         }
 
     }

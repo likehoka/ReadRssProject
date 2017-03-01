@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 
 import com.arellomobile.mvp.MvpAppCompatFragment;
 import com.arellomobile.mvp.presenter.InjectPresenter;
-import com.hoka.readrssproject.View.IMainActivity;
+import com.hoka.readrssproject.view.IMainActivity;
 import com.hoka.readrssproject.adapter.NewsAdapter;
 import com.hoka.readrssproject.database.DatabaseManager;
 import com.hoka.readrssproject.model.FeedItem;
