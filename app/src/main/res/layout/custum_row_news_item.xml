@@ -15,7 +15,7 @@
 
         <TextView
             android:id="@+id/textview_custum_row_news_item_date_text"
-            android:text="Small Text"
+            android:text="@string/date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceSmall"
@@ -41,7 +41,7 @@
             android:layout_height="wrap_content"
             android:background="#80000000"
             android:gravity="center"
-            android:text="Large Text"
+            android:text="@string/title"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:layout_below="@+id/imageview_custum_row_news_item_thumb_img"
             android:layout_alignParentStart="true" />

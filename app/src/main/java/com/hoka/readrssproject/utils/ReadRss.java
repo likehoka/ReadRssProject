@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.hoka.readrssproject.R;
 import com.hoka.readrssproject.adapter.NewsAdapter;
 import com.hoka.readrssproject.database.DatabaseHelper;
 import com.hoka.readrssproject.model.FeedItem;
@@ -50,7 +51,7 @@ public class ReadRss extends AsyncTask<Void, Void, Void> {
         this.mContext = context;
         this.mAdapter = adapter;
         mProgressDialog = new ProgressDialog(context);
-        mProgressDialog.setMessage("Loading...");
+        mProgressDialog.setMessage(mContext.getString(R.string.loading));
     }
 
     @Override
@@ -59,8 +60,7 @@ public class ReadRss extends AsyncTask<Void, Void, Void> {
             ProcessXml(Getdata());
         }
         else {
-            Toast.makeText(mContext, "Ошибка при проверке загружаемого документа", Toast.LENGTH_SHORT).show();
-            Log.d("mLog", "Ошибка");
+            Toast.makeText(mContext, R.string.error_upload_file, Toast.LENGTH_SHORT).show();
             }
         return null;
     }
@@ -69,7 +69,7 @@ public class ReadRss extends AsyncTask<Void, Void, Void> {
     protected void onPreExecute() {
         super.onPreExecute();
         mProgressDialog = new ProgressDialog(mContext);
-        mProgressDialog.setMessage("Downloading content, please wait...");
+        mProgressDialog.setMessage(mContext.getString(R.string.download_content_message));
         mProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         mProgressDialog.setIndeterminate(true);
         mProgressDialog.setCancelable(false);
@@ -111,7 +111,6 @@ public class ReadRss extends AsyncTask<Void, Void, Void> {
             return byteArrayOutputStream.toByteArray();
         } catch (Exception exc){
             exc.printStackTrace();
-            Log.d("ImageManager", "Error:" + exc.toString());
         } return null;
     }
 

@@ -1,16 +1,15 @@
 package com.hoka.readrssproject;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.arellomobile.mvp.MvpAppCompatActivity;
 import com.arellomobile.mvp.presenter.InjectPresenter;
+import com.hoka.readrssproject.View.IRssSettingsActivity;
 import com.hoka.readrssproject.database.DatabaseHelper;
 import com.hoka.readrssproject.model.SaveUrlItem;
-import com.hoka.readrssproject.View.IRssSettingsActivity;
 import com.hoka.readrssproject.presenter.RssSettingsPresenter;
 import com.j256.ormlite.android.apptools.OpenHelperManager;
 import com.j256.ormlite.dao.Dao;
@@ -42,18 +41,8 @@ public class RssSettingsActivity extends MvpAppCompatActivity implements IRssSet
 
     @OnClick(R.id.button_activity_rss_settings_open_url)
     public void onClick() {
-
-        Log.d("mLog", "editTextUrlName.getText() = " + editTextUrlName.getText().toString());
         rssSettingsPresenter.showCheckRss(editTextUrlName.getText().toString());
     }
-
-    /*
-    private DatabaseHelper getHelper() {
-        if (mDatabaseHelper == null) {
-            mDatabaseHelper = OpenHelperManager.getHelper(this, DatabaseHelper.class);
-        }
-        return mDatabaseHelper;
-    }*/
 
     @Override
     public void showMainActivity() {
@@ -78,7 +67,7 @@ public class RssSettingsActivity extends MvpAppCompatActivity implements IRssSet
 
     @Override
     public void showErrorMessage() {
-        Toast.makeText(this, "Sorry, it's not RSS address", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, R.string.error_not_rss_address, Toast.LENGTH_SHORT).show();
 
     }
 }
