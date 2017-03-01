@@ -16,6 +16,7 @@ import com.hoka.readrssproject.BlankDetails;
 import com.hoka.readrssproject.DetailsActivity;
 import com.hoka.readrssproject.R;
 import com.hoka.readrssproject.model.FeedItem;
+import com.hoka.readrssproject.utils.Constans;
 import com.hoka.readrssproject.utils.HelpLocaleFunction;
 
 import java.text.ParseException;
@@ -28,20 +29,13 @@ import java.util.Locale;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-/**
- * Created by hoka on 28.02.2017.
- */
-
 public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+    /*
+    The Adapter provides access to the data items in main class
+     */
+
 
     private List<FeedItem> mList;
-    //переменная gadget отвечает за открытие нового активити если приложение работает на телефоне
-    //либо в планшете: false - телефон, true - планшет
-    //значение sGadget задается в MainActivity, если при загрузке виден фрагмент в layout-large
-    //то приложение открывает информацию для просмотра во фрагменте, иначе открытие происходит в телефоне
-    //с загрузкой DetailsActivity для предварительного просмотра записи
-    public static Boolean sGadget = false;
-
     public NewsAdapter() {
         mList = new ArrayList<>();
     }
@@ -72,7 +66,7 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         notifyDataSetChanged();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class ViewHolder extends RecyclerView.ViewHolder{
 
         @BindView(R.id.textview_custum_row_news_item_date_text)
         TextView textDate;
@@ -110,7 +104,13 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             cardview.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (sGadget) {
+
+                    /*
+                    used gadget selection condition, if isTablet = true we create BlankDetails fragment,
+                    else create new DetailsActivity
+                     */
+
+                    if (Constans.isTablet) {
                         BlankDetails blankDetails = new BlankDetails();
                         blankDetails.setTitle(feed.getTitle());
                         blankDetails.setDescription(feed.getDescription());
@@ -132,10 +132,5 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 }
             });
         }
-
-        @Override
-        public void onClick(View view) {
-        }
-
     }
 }

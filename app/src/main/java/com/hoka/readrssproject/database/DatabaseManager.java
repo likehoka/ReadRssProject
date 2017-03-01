@@ -9,6 +9,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+    /*
+    Class receives commands for working with database
+     */
+
 public class DatabaseManager {
     private static DatabaseManager sInstance;
     private DatabaseHelper mDatabaseHelper;

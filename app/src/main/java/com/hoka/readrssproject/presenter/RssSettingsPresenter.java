@@ -20,6 +20,12 @@ import java.util.ArrayList;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
+    /*
+    retrieves the data from the Model,
+    applies the UI logic and manages the state of the View,
+    decides what to display and reacts to user input notifications from the View.
+     */
+
 @InjectViewState
 public class RssSettingsPresenter extends MvpPresenter<IRssSettingsActivity> {
     public void showCheckRss(final String strCheckUrl){

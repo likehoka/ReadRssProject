@@ -21,6 +21,12 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+    /*
+    This activity allows you to define and address verification
+    flow rss availability if the address is available that opens
+    MainActivity
+     */
+
 public class RssSettingsActivity extends MvpAppCompatActivity implements IRssSettingsActivity {
     @InjectPresenter
     RssSettingsPresenter rssSettingsPresenter;

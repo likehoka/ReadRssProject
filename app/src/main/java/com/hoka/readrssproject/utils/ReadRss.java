@@ -31,12 +31,16 @@ import java.util.ArrayList;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
+    /*
+    This class reads and writes a new stream of data to the database
+     */
+
 public class ReadRss extends AsyncTask<Void, Void, Void> {
     private Context mContext;
 
     private DatabaseHelper mDatabaseHelper = OpenHelperManager.getHelper(mContext, DatabaseHelper.class);;
     private Dao<FeedItem, Integer> mFeedItemIntegerDao;
-    private ArrayList<FeedItem> mArrayListFeedItems; //объявляем для хранения записей
+    private ArrayList<FeedItem> mArrayListFeedItems;
 
     private boolean mBaseStatus=false;
     private ProgressDialog mProgressDialog;
@@ -113,6 +117,7 @@ public class ReadRss extends AsyncTask<Void, Void, Void> {
             exc.printStackTrace();
         } return null;
     }
+
 
     public void creatBase(ArrayList<FeedItem> feed){
         FeedItem feedItem = new FeedItem();

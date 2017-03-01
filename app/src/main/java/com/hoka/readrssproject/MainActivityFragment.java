@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.arellomobile.mvp.MvpAppCompatFragment;
 import com.arellomobile.mvp.presenter.InjectPresenter;
@@ -58,6 +59,8 @@ public class MainActivityFragment extends MvpAppCompatFragment implements SwipeR
         //If
         if (mListUrl.size() != 0) {
             mPresenterMainActivity.showRecyclerDate(mListUrl.get(0).getUrl().toString());
+        } else {
+            Toast.makeText(getContext(), R.string.error_message, Toast.LENGTH_SHORT).show();
         }
         mRecyclerview.addItemDecoration(new VerticalSpace(25));
         mSwipeRefreshLayout.setOnRefreshListener(this);

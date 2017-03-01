@@ -12,6 +12,11 @@ import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+    /*
+    In this class, we display the data using a tablet,
+    the data show selected news
+     */
+
 import com.hoka.readrssproject.utils.HelpLocaleFunction;
 
 import java.text.ParseException;
@@ -23,8 +28,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class BlankDetails extends Fragment {
-    //Элементы передачи входных данных из MainActivityFragment
-    //Используются только для планшетов
     @BindView(R.id.textview_fragment_blank_details_author)
     TextView textAuthor;
     private Bitmap mThumbnail;
@@ -38,7 +41,6 @@ public class BlankDetails extends Fragment {
     TextView textTitle;
     @BindView(R.id.blankdetails_scrollview)
     ScrollView blankdetailsScrollview;
-
 
     private String strTitle;
     private String strDescription;

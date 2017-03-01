@@ -6,6 +6,10 @@ import com.j256.ormlite.table.DatabaseTable;
 
 import java.io.Serializable;
 
+    /*
+    Create table all_news
+     */
+
 @DatabaseTable(tableName = "all_news")
 public class FeedItem implements Serializable {
     public static final String COLUMN_ID = "id";

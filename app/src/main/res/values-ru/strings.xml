@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">ReadRss</string>
+    <string name="action_settings">Настройки</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="enter_url_rss">Введите URL RSS</string>
+    <string name="text_example">http://www.sciencemag.org/rss/news_current.xml</string>
+    <string name="open_url">Открыть URL</string>
+    <string name="error_message">Введите URL в настройках</string>
+    <string name="author">Автор</string>
+    <string name="description">Описание</string>
+    <string name="title">Титл</string>
+    <string name="date">Дата</string>
+    <string name="error_downdload">Внимание! Ошибка скачивания файла!</string>
+    <string name="download_content_message">Загрузка, подождите...</string>
+    <string name="error_upload_file">Внимание! Файл не загрузился...</string>
+    <string name="loading">Загрузка...</string>
+    <string name="error_not_rss_address">По данной ссылке нет RSS потока</string>
+</resources>

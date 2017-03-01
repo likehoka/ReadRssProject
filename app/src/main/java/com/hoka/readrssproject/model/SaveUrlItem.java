@@ -6,6 +6,10 @@ import com.j256.ormlite.table.DatabaseTable;
 
 import java.io.Serializable;
 
+    /*
+    Create table url_item
+     */
+
 @DatabaseTable(tableName = "url_item")
 public class SaveUrlItem implements Serializable {
     public static final String COLUMN_ID = "id";

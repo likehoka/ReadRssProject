@@ -24,6 +24,10 @@ import java.util.Locale;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+    /*
+    In this activity, we display the data using a tablet, the data show selected news
+     */
+
 public class DetailsActivity extends MvpAppCompatActivity implements IDetailsActivity {
     @InjectPresenter
     DetailsActivityPresenter mDetailsActivityPresenter;

@@ -4,6 +4,10 @@ import android.graphics.Rect;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+    /*
+    This class creates a setting to display RecyclerView in MainActivityFragment
+     */
+
 public class VerticalSpace extends RecyclerView.ItemDecoration {
     private int Space;
     public VerticalSpace(int Space){

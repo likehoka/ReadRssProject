@@ -5,6 +5,10 @@ import android.os.Build;
 
 import java.util.Locale;
 
+    /*
+    get the selected language of your device, this might help
+     */
+
 public class HelpLocaleFunction {
     private Context mContext;
 

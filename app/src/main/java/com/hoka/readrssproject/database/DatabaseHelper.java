@@ -12,6 +12,10 @@ import com.j256.ormlite.table.TableUtils;
 
 import java.sql.SQLException;
 
+    /*
+    A helper class to manage database creation and version management.
+     */
+
 public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     private static final String DATABASE_NAME = "news.db";
     private static final int DATABASE_VERSION = 1;
