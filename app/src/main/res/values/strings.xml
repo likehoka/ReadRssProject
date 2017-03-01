@@ -8,4 +8,8 @@
     <string name="text_example">http://www.sciencemag.org/rss/news_current.xml</string>
     <string name="open_url">Open URL</string>
     <string name="error_message">Input URL in Setting please</string>
+    <string name="author">Author</string>
+    <string name="description">Medium Text</string>
+    <string name="title">Large Text</string>
+    <string name="date">Small Text</string>
 </resources>

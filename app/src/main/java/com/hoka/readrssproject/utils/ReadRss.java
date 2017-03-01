@@ -90,6 +90,12 @@ public class ReadRss extends AsyncTask<Void, Void, Void> {
         this.mProgressDialog.dismiss();
     }
 
+    @Override
+    protected void onCancelled() {
+        super.onCancelled();
+        this.mProgressDialog.dismiss();
+    }
+
 
     private byte[] getLogoImage(String url){
         try{
@@ -157,21 +163,23 @@ public class ReadRss extends AsyncTask<Void, Void, Void> {
                                 item.setTitle(cureent.getTextContent());
                             }
 
-                        } else if (cureent.getNodeName().equals("description")&&mBaseStatus==false){
+                        } else if (cureent.getNodeName().equals("description") && mBaseStatus==false){
                             item.setDescription(cureent.getTextContent());
-                        } else if (cureent.getNodeName().equals("pubDate")&&mBaseStatus==false){
+                        } else if (cureent.getNodeName().equals("pubDate") && mBaseStatus==false){
                             item.setDate(cureent.getTextContent());
-                        } else if (cureent.getNodeName().equals("link")&&mBaseStatus==false){
+                        } else if (cureent.getNodeName().equals("link") && mBaseStatus==false){
                             item.setLink(cureent.getTextContent());
-                        } else if (cureent.getNodeName().equals("media:thumbnail")&&mBaseStatus==false){
+                        } else if (cureent.getNodeName().equals("media:thumbnail") && mBaseStatus==false){
                             String url = cureent.getAttributes().item(0).getTextContent();
                             item.setContent(url);
-                        } else if (cureent.getNodeName().equals("enclosure")) {
+                        } else if (cureent.getNodeName().equals("enclosure") && mBaseStatus==false) {
                             String url = cureent.getAttributes().item(0).getTextContent();
                             item.setImage(getLogoImage(url));
-                        } else if (cureent.getNodeName().equals("media:content")) {
+                        } else if (cureent.getNodeName().equals("media:content") && mBaseStatus==false) {
                             String url = cureent.getAttributes().item(0).getTextContent();
                             item.setImage(getLogoImage(url));
+                        } else if ((cureent.getNodeName().equals("author") && mBaseStatus==false)) {
+                            item.setAuthor(cureent.getTextContent());
                         }
                     }
 

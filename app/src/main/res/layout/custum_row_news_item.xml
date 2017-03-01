@@ -15,14 +15,16 @@
 
         <TextView
             android:id="@+id/textview_custum_row_news_item_date_text"
-            android:layout_margin="@dimen/activity_horizontal_margin"
             android:text="Small Text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:layout_marginRight="36dp"
+            android:layout_marginTop="20dp"
             android:layout_alignParentTop="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
-            android:textAppearance="?android:attr/textAppearanceSmall"/>
+            android:layout_marginEnd="36dp" />
 
         <ImageView
             android:layout_width="match_parent"
@@ -32,16 +34,6 @@
             android:layout_below="@+id/textview_custum_row_news_item_date_text"
             android:layout_centerHorizontal="true"/>
 
-        <TextView
-            android:layout_margin="@dimen/activity_horizontal_margin"
-            android:id="@+id/textview_custum_row_news_item_description_text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/imageview_custum_row_news_item_thumb_img"
-            android:text="Medium Text"
-            android:textAppearance="?android:attr/textAppearanceMedium"/>
 
         <TextView
             android:id="@+id/textview_custum_row_news_item_title_text"
@@ -49,11 +41,9 @@
             android:layout_height="wrap_content"
             android:background="#80000000"
             android:gravity="center"
-            android:lines="1"
             android:text="Large Text"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:layout_above="@+id/textview_custum_row_news_item_description_text"
-            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/imageview_custum_row_news_item_thumb_img"
             android:layout_alignParentStart="true" />
 
     </RelativeLayout>

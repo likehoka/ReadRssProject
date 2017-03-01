@@ -1,9 +1,7 @@
 package com.hoka.readrssproject;
 
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
-import android.os.Build;
 import android.os.Bundle;
 import android.text.Html;
 import android.view.View;
@@ -16,6 +14,7 @@ import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.hoka.readrssproject.View.IDetailsActivity;
 import com.hoka.readrssproject.model.FeedItem;
 import com.hoka.readrssproject.presenter.DetailsActivityPresenter;
+import com.hoka.readrssproject.utils.HelpLocaleFunction;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -39,6 +38,8 @@ public class DetailsActivity extends MvpAppCompatActivity implements IDetailsAct
     TextView texDescription;
     @BindView(R.id.scrollView_activity_details)
     ScrollView scrollViewActivityDetails;
+    @BindView(R.id.textview_activity_details_author_text)
+    TextView textAuthor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,33 +51,25 @@ public class DetailsActivity extends MvpAppCompatActivity implements IDetailsAct
         mDetailsActivityPresenter.showDetails(mFeedItem);
     }
 
-    public Locale getCurrentLocale(Context context) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            return context.getResources().getConfiguration().getLocales().get(0);
-        } else {
-            return context.getResources().getConfiguration().locale;
-        }
-    }
-
     @Override
     public void showDetails(final FeedItem mFeedItem) {
 
         textTitle.setText(mFeedItem.getTitle());
+        if (mFeedItem.getAuthor() != null){
+            textAuthor.setText(R.string.author + ": " + mFeedItem.getAuthor());
+        }
+
         texDescription.setText(Html.fromHtml(mFeedItem.getDescription()));
+
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("E, dd MMM yyy HH:mm:ss zzz", Locale.ENGLISH);
         try {
-            Date date = simpleDateFormat.parse(mFeedItem.getDate().toString());
-            SimpleDateFormat print;
-
-            if (getCurrentLocale(this) == Locale.ENGLISH) {
-                print = new SimpleDateFormat("E, dd MMM yyy HH:mm a", Locale.ENGLISH);
-            } else {
-                print = new SimpleDateFormat("E, dd MMM yyy HH:mm z", getCurrentLocale(this));
-            }
-            textDate.setText(print.format(date));
+            Date date = simpleDateFormat.parse(mFeedItem.getDate());
+            HelpLocaleFunction mHelpLocaleFunction = new HelpLocaleFunction(this);
+            simpleDateFormat = new SimpleDateFormat("E, dd MMM yyy HH:mm", mHelpLocaleFunction.HelpLocaleFunction());
+            textDate.setText(simpleDateFormat.format(date));
         } catch (ParseException exc) {
             exc.printStackTrace();
-            textDate.setText(mFeedItem.getDate().toString());
+            textDate.setText(mFeedItem.getDate());
         }
         try {
             imageThumbImg.setImageBitmap(BitmapFactory.decodeByteArray(mFeedItem.getImage(), 0, mFeedItem.getImage().length));

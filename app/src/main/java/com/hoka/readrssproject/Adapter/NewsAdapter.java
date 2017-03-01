@@ -1,14 +1,11 @@
 package com.hoka.readrssproject.adapter;
 
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
-import android.os.Build;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
-import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +16,7 @@ import com.hoka.readrssproject.BlankDetails;
 import com.hoka.readrssproject.DetailsActivity;
 import com.hoka.readrssproject.R;
 import com.hoka.readrssproject.model.FeedItem;
+import com.hoka.readrssproject.utils.HelpLocaleFunction;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -80,8 +78,6 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         TextView textDate;
         @BindView(R.id.imageview_custum_row_news_item_thumb_img)
         ImageView imageThumb;
-        @BindView(R.id.textview_custum_row_news_item_description_text)
-        TextView textDescription;
         @BindView(R.id.textview_custum_row_news_item_title_text)
         TextView textTitle;
         @BindView(R.id.cardview_custum_row_news_item)
@@ -92,32 +88,15 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             ButterKnife.bind(this, itemView);
         }
 
-        public Locale getCurrentLocale(Context context) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                return context.getResources().getConfiguration().getLocales().get(0);
-            } else {
-                return context.getResources().getConfiguration().locale;
-            }
-        }
-
         public void setItemName(final FeedItem feed) {
             textTitle.setText(feed.getTitle());
-            try {
-                textDescription.setText(Html.fromHtml(feed.getDescription()));
-            } catch (NullPointerException e) {
-                textDescription.setText("");
-            }
+
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("E, dd MMM yyy HH:mm:ss zzz", Locale.ENGLISH);
             try {
                 Date date = simpleDateFormat.parse(feed.getDate());
-                SimpleDateFormat print;
-                if (getCurrentLocale(itemView.getContext()) == Locale.ENGLISH) {
-                    print = new SimpleDateFormat("E, dd MMM yyy HH:mm a", Locale.ENGLISH);
-                } else {
-                    print = new SimpleDateFormat("E, dd MMM yyy HH:mm z", getCurrentLocale(itemView.getContext()));
-                }
-                textDate.setText(print.format(date));
-
+                HelpLocaleFunction mHelpLocaleFunction = new HelpLocaleFunction(itemView.getContext());
+                simpleDateFormat = new SimpleDateFormat("E, dd MMM yyy HH:mm", mHelpLocaleFunction.HelpLocaleFunction());
+                textDate.setText(simpleDateFormat.format(date));
             } catch (ParseException exc) {
                 exc.printStackTrace();
                 textDate.setText(feed.getDate());
@@ -128,8 +107,6 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 imageThumb.setImageResource(R.drawable.news);
             }
 
-            final ViewHolder holder = new ViewHolder(itemView);
-
             cardview.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -139,6 +116,7 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                         blankDetails.setDescription(feed.getDescription());
                         blankDetails.setDate(feed.getDate());
                         blankDetails.setLink(feed.getLink());
+                        blankDetails.setAuthor(feed.getAuthor());
                         try {
                             blankDetails.setThumbnail(BitmapFactory.decodeByteArray(feed.getImage(), 0, feed.getImage().length));
                         } catch (Exception e) {

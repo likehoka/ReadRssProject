@@ -1,9 +1,7 @@
 package com.hoka.readrssproject;
 
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.Html;
@@ -14,6 +12,8 @@ import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.hoka.readrssproject.utils.HelpLocaleFunction;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -23,9 +23,10 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class BlankDetails extends Fragment {
-
     //Элементы передачи входных данных из MainActivityFragment
     //Используются только для планшетов
+    @BindView(R.id.textview_fragment_blank_details_author)
+    TextView textAuthor;
     private Bitmap mThumbnail;
     @BindView(R.id.textview_fragment_blank_details_date)
     TextView textDate;
@@ -43,6 +44,7 @@ public class BlankDetails extends Fragment {
     private String strDescription;
     private String strDatelocal;
     private String strLink;
+    private String strAuthor;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -52,17 +54,16 @@ public class BlankDetails extends Fragment {
         ButterKnife.bind(this, view);
         textTitle.setText(strTitle);
         textDescription.setText(Html.fromHtml(strDescription));
+        if (strAuthor != null) {
+            textAuthor.setText(R.string.author + ": " + strAuthor);
+        }
+
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("E, dd MMM yyy HH:mm:ss zzz", Locale.ENGLISH);
         try {
             Date date = simpleDateFormat.parse(strDatelocal);
-            SimpleDateFormat print;
-
-            if (getCurrentLocale(getContext()) == Locale.ENGLISH) {
-                print = new SimpleDateFormat("E, dd MMM yyy HH:mm a", Locale.ENGLISH);
-            } else {
-                print = new SimpleDateFormat("E, dd MMM yyy HH:mm z", getCurrentLocale(getContext()));
-            }
-            textDate.setText(print.format(date));
+            HelpLocaleFunction mHelpLocaleFunction = new HelpLocaleFunction(view.getContext());
+            simpleDateFormat = new SimpleDateFormat("E, dd MMM yyy HH:mm", mHelpLocaleFunction.HelpLocaleFunction());
+            textDate.setText(simpleDateFormat.format(date));
         } catch (ParseException exc) {
             exc.printStackTrace();
             textDate.setText(strDatelocal);
@@ -101,13 +102,5 @@ public class BlankDetails extends Fragment {
         this.mThumbnail = thumbnail;
     }
 
-    public Locale getCurrentLocale(Context context) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            return context.getResources().getConfiguration().getLocales().get(0);
-        } else {
-            return context.getResources().getConfiguration().locale;
-        }
-    }
-
-
+    public void setAuthor(String author) {this.strAuthor = author;}
 }

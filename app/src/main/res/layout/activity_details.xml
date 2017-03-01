@@ -31,7 +31,7 @@
 
             <TextView
                 android:id="@+id/textview_activity_details_date_text"
-                android:text="Small Text"
+                android:text="@string/date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceSmall"
@@ -48,7 +48,7 @@
                 android:layout_height="wrap_content"
                 android:background="#80000000"
                 android:gravity="center"
-                android:text="Large Text"
+                android:text="@string/title"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:layout_below="@+id/imageview_activity_details_thumb_img"
                 android:layout_alignParentLeft="true"
@@ -58,10 +58,20 @@
                 android:id="@+id/textview_activity_details_description_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Medium Text"
+                android:text="@string/description"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:layout_below="@+id/textview_activity_details_title_text"
                 android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
+
+            <TextView
+                android:text=""
+                android:layout_width="fill_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/textview_activity_details_description_text"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:id="@+id/textview_activity_details_author_text"
+                android:layout_alignParentBottom="true"
                 android:layout_alignParentStart="true" />
 
         </RelativeLayout>
