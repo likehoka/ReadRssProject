@@ -22,11 +22,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/text_example"
-        android:id="@+id/edit_text_url_name"/>
+        android:id="@+id/edit_text_activity_rss_settings_url_name"/>
 
     <Button
         android:text="@string/open_url"
-        android:id="@+id/button_open_url"
+        android:id="@+id/button_activity_rss_settings_open_url"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"/>

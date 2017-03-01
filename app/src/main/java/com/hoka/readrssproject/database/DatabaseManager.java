@@ -10,42 +10,42 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DatabaseManager {
-    private static DatabaseManager instance;
-    private DatabaseHelper helper;
+    private static DatabaseManager sInstance;
+    private DatabaseHelper mDatabaseHelper;
 
     public static void init(Context context) {
-        if (instance == null) {
-            instance = new DatabaseManager(context);
+        if (sInstance == null) {
+            sInstance = new DatabaseManager(context);
         }
     }
 
     static public DatabaseManager getInstance() {
-        return instance;
+        return sInstance;
     }
 
     public DatabaseManager(Context context) {
-        helper = new DatabaseHelper(context);
+        mDatabaseHelper = new DatabaseHelper(context);
     }
 
-    public DatabaseHelper getHelper() { return helper; }
+    public DatabaseHelper getHelper() { return mDatabaseHelper; }
 
     public ArrayList<FeedItem> getQueryForEqFeedItem(String nameTable, String param){
-        ArrayList<FeedItem> feedItems = null;
+        ArrayList<FeedItem> mArrayListFeedItems = null;
         try {
-            feedItems = (ArrayList<FeedItem>) getHelper().getFeedItemDao().queryForEq(nameTable, param);
+            mArrayListFeedItems = (ArrayList<FeedItem>) getHelper().getFeedItemDao().queryForEq(nameTable, param);
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return feedItems;
+        return mArrayListFeedItems;
     }
 
     public List<SaveUrlItem> getAllSaveUrlItem() {
-        List<SaveUrlItem> saveUrlItem = null;
+        List<SaveUrlItem> mListSaveUrlItem = null;
         try {
-            saveUrlItem = (ArrayList<SaveUrlItem>) getHelper().getSaveUrlItemDao().queryForAll();
+            mListSaveUrlItem = (ArrayList<SaveUrlItem>) getHelper().getSaveUrlItemDao().queryForAll();
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return saveUrlItem;
+        return mListSaveUrlItem;
     }
 }

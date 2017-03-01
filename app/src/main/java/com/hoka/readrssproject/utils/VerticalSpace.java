@@ -5,7 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 public class VerticalSpace extends RecyclerView.ItemDecoration {
-    int Space;
+    private int Space;
     public VerticalSpace(int Space){
         this.Space=Space;
     }

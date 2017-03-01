@@ -29,19 +29,16 @@ public class DetailsActivity extends MvpAppCompatActivity implements IDetailsAct
     @InjectPresenter
     DetailsActivityPresenter mDetailsActivityPresenter;
 
-    //TextView mTitle, mDescription, mDate, mLink;
-    //ImageView mThumbnail;
-    //ScrollView mScrollView;
-    @BindView(R.id.details_thumb_img)
-    ImageView detailsThumbImg;
-    @BindView(R.id.details_date_text)
-    TextView detailsDateText;
-    @BindView(R.id.details_title_text)
-    TextView detailsTitleText;
-    @BindView(R.id.details_description_text)
-    TextView detailsDescriptionText;
-    @BindView(R.id.details_scrollView)
-    ScrollView detailsScrollView;
+    @BindView(R.id.imageview_activity_details_thumb_img)
+    ImageView imageThumbImg;
+    @BindView(R.id.textview_activity_details_date_text)
+    TextView textDate;
+    @BindView(R.id.textview_activity_details_title_text)
+    TextView textTitle;
+    @BindView(R.id.textview_activity_details_description_text)
+    TextView texDescription;
+    @BindView(R.id.scrollView_activity_details)
+    ScrollView scrollViewActivityDetails;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,11 +46,6 @@ public class DetailsActivity extends MvpAppCompatActivity implements IDetailsAct
         setContentView(R.layout.activity_details);
         ButterKnife.bind(this);
         final FeedItem mFeedItem = (FeedItem) getIntent().getSerializableExtra("DelaisActivity");
-        //mTitle = (TextView) findViewById(R.id.details_title_text);
-        //mDescription = (TextView) findViewById(R.id.details_description_text);
-        //mDate = (TextView) findViewById(R.id.details_date_text);
-        //mScrollView = (ScrollView) findViewById(R.id.details_scrollView);
-        //mThumbnail = (ImageView) findViewById(R.id.details_thumb_img);
 
         mDetailsActivityPresenter.showDetails(mFeedItem);
     }
@@ -69,8 +61,8 @@ public class DetailsActivity extends MvpAppCompatActivity implements IDetailsAct
     @Override
     public void showDetails(final FeedItem mFeedItem) {
 
-        detailsTitleText.setText(mFeedItem.getTitle());
-        detailsDescriptionText.setText(Html.fromHtml(mFeedItem.getDescription()));
+        textTitle.setText(mFeedItem.getTitle());
+        texDescription.setText(Html.fromHtml(mFeedItem.getDescription()));
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("E, dd MMM yyy HH:mm:ss zzz", Locale.ENGLISH);
         try {
             Date date = simpleDateFormat.parse(mFeedItem.getDate().toString());
@@ -81,18 +73,18 @@ public class DetailsActivity extends MvpAppCompatActivity implements IDetailsAct
             } else {
                 print = new SimpleDateFormat("E, dd MMM yyy HH:mm z", getCurrentLocale(this));
             }
-            detailsDateText.setText(print.format(date));
+            textDate.setText(print.format(date));
         } catch (ParseException exc) {
             exc.printStackTrace();
-            detailsDateText.setText(mFeedItem.getDate().toString());
+            textDate.setText(mFeedItem.getDate().toString());
         }
         try {
-            detailsThumbImg.setImageBitmap(BitmapFactory.decodeByteArray(mFeedItem.getImage(), 0, mFeedItem.getImage().length));
+            imageThumbImg.setImageBitmap(BitmapFactory.decodeByteArray(mFeedItem.getImage(), 0, mFeedItem.getImage().length));
         } catch (Exception e) {
-            detailsThumbImg.setImageResource(R.drawable.news);
+            imageThumbImg.setImageResource(R.drawable.news);
         }
 
-        detailsThumbImg.setOnClickListener(new View.OnClickListener() {
+        imageThumbImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(DetailsActivity.this, NewsDetails.class);

@@ -13,7 +13,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
             <TextView
-                android:id="@+id/frag_date_text"
+                android:id="@+id/textview_fragment_blank_details_date"
                 android:layout_margin="@dimen/activity_horizontal_margin"
                 android:text="Small Text"
                 android:layout_width="wrap_content"
@@ -27,30 +27,30 @@
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 android:src="@drawable/news"
-                android:id="@+id/frag_thumb_img"
-                android:layout_below="@+id/frag_date_text"
+                android:id="@+id/image_fragment_blank_details_thumb_img"
+                android:layout_below="@+id/textview_fragment_blank_details_date"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true" />
 
             <TextView
-                android:id="@+id/frag_description_text"
+                android:id="@+id/textview_fragment_blank_details_description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Medium Text"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:layout_below="@+id/frag_title_text"
+                android:layout_below="@+id/textview_fragment_blank_details_title"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true" />
 
             <TextView
-                android:id="@+id/frag_title_text"
+                android:id="@+id/textview_fragment_blank_details_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="#80000000"
                 android:gravity="center"
                 android:text="Large Text"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:layout_below="@+id/frag_thumb_img"
+                android:layout_below="@+id/image_fragment_blank_details_thumb_img"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true" />
 

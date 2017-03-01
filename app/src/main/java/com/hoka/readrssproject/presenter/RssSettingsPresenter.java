@@ -22,31 +22,31 @@ import javax.xml.parsers.DocumentBuilderFactory;
 
 @InjectViewState
 public class RssSettingsPresenter extends MvpPresenter<IRssSettingsActivity> {
-    public void showCheckRss(final String checkUrl){
+    public void showCheckRss(final String strCheckUrl){
         AsyncTask<Void, Void, Void> asyncTask = new AsyncTask<Void, Void, Void>() {
-            private Boolean flag;
+            private Boolean mFlag;
 
             @Override
             protected Void doInBackground(Void... params) {
-                if(!isRssOrNot(checkUrl)){
-                    flag = false;
-                } else flag = true;
+                if(!isRssOrNot(strCheckUrl)){
+                    mFlag = false;
+                } else mFlag = true;
                 return null;
             }
 
             @Override
             protected void onPostExecute(Void aVoid) {
                 super.onPostExecute(aVoid);
-                if (flag){
+                if (mFlag){
                     getViewState().showMainActivity();
                 }else {
                     getViewState().showErrorMessage();
                 }
             }
 
-            public boolean isRssOrNot(String address) {
+            public boolean isRssOrNot(String strAddress) {
                 Document data;
-                data = getData(address);
+                data = getData(strAddress);
                 Boolean ok = false;
                 int count = 0;
                 ArrayList<FeedItem> feedItems;
@@ -89,9 +89,9 @@ public class RssSettingsPresenter extends MvpPresenter<IRssSettingsActivity> {
                 return ok;
             }
 
-            public Document getData(String address){
+            public Document getData(String strAddress){
                 try{
-                    URL url = new URL(address);
+                    URL url = new URL(strAddress);
                     HttpURLConnection connection = (HttpURLConnection)url.openConnection();
                     connection.setRequestMethod("GET");
                     InputStream inputStream = connection.getInputStream();

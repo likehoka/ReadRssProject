@@ -10,19 +10,25 @@ import android.view.View;
 
 import com.hoka.readrssproject.adapter.NewsAdapter;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class MainActivity extends AppCompatActivity {
+
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        ButterKnife.bind(this);
         setSupportActionBar(toolbar);
 
-        View view = (View)findViewById(R.id.fragmentBlankDetails);
-        if (view!=null){
+        View view = (View) findViewById(R.id.fragmentBlankDetails);
+        if (view != null) {
             NewsAdapter adapter = new NewsAdapter();
-            adapter.mGadget=true;
+            adapter.sGadget = true;
         }
 
     }

@@ -2,7 +2,6 @@ package com.hoka.readrssproject;
 
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,13 +28,11 @@ public class MainActivityFragment extends MvpAppCompatFragment implements SwipeR
         IMainActivity {
     @InjectPresenter
     PresenterMainActivity mPresenterMainActivity;
-    @BindView(R.id.recyclerview)
-    RecyclerView recyclerview;
-    @BindView(R.id.swipe_refresh_layout)
-    SwipeRefreshLayout swipeRefreshLayout;
+    @BindView(R.id.recycler_view_fragment_main)
+    RecyclerView mRecyclerview;
+    @BindView(R.id.swipe_refresh_layout_fragment_main)
+    SwipeRefreshLayout mSwipeRefreshLayout;
 
-
-    private LinearLayoutManager mLinearLayoutManager;
     private NewsAdapter mAdapter;
     private List<FeedItem> mList;
     private List<SaveUrlItem> mListUrl;
@@ -49,24 +46,24 @@ public class MainActivityFragment extends MvpAppCompatFragment implements SwipeR
         ButterKnife.bind(this, view);
         DatabaseManager.init(getContext());
         mAdapter = new NewsAdapter();
-        recyclerview.setAdapter(mAdapter);
+        mRecyclerview.setAdapter(mAdapter);
         mListUrl = new ArrayList<>(DatabaseManager.getInstance().getAllSaveUrlItem());
         if (mListUrl.size() != 0) {
             mPresenterMainActivity.showRecyclerDate(mListUrl.get(0).getUrl().toString());
         }
-        recyclerview.addItemDecoration(new VerticalSpace(25));
-        swipeRefreshLayout.setOnRefreshListener(this);
+        mRecyclerview.addItemDecoration(new VerticalSpace(25));
+        mSwipeRefreshLayout.setOnRefreshListener(this);
         return view;
     }
 
 
     @Override
     public void onRefresh() {
-        swipeRefreshLayout.setRefreshing(true);
+        mSwipeRefreshLayout.setRefreshing(true);
         if (mListUrl.size() != 0) {
             mPresenterMainActivity.showRecyclerDate(mListUrl.get(0).getUrl().toString());
         }
-        swipeRefreshLayout.setRefreshing(false);
+        mSwipeRefreshLayout.setRefreshing(false);
     }
 
 
@@ -81,11 +78,11 @@ public class MainActivityFragment extends MvpAppCompatFragment implements SwipeR
 
 
     @Override
-    public void showRecyclerViewDate(String s) {
-        mList = new ArrayList<>(DatabaseManager.getInstance().getQueryForEqFeedItem("url", s));
+    public void showRecyclerViewDate(String strNameUrl) {
+        mList = new ArrayList<>(DatabaseManager.getInstance().getQueryForEqFeedItem("url", strNameUrl));
         mListAdapter = new ArrayList<FeedItem>();
         if (mList.size() == 0) {
-            ReadRss readRss = new ReadRss(getActivity(), recyclerview, mAdapter, s);
+            ReadRss readRss = new ReadRss(getActivity(), mRecyclerview, mAdapter, strNameUrl);
             readRss.execute();
         }
         if (mList != null) {

@@ -31,35 +31,33 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
 public class ReadRss extends AsyncTask<Void, Void, Void> {
-    Context context;
+    private Context mContext;
 
-    private DatabaseHelper databaseHelper = null;
-    private Dao<FeedItem, Integer> feedItemIntegerDao;
-    private ArrayList<FeedItem> feedItems; //объявляем для хранения записей
+    private DatabaseHelper mDatabaseHelper = null;
+    private Dao<FeedItem, Integer> mFeedItemIntegerDao;
+    private ArrayList<FeedItem> mArrayListFeedItems; //объявляем для хранения записей
 
-    boolean BaseStatus=false;
-    boolean Updater = false;
-    public static Boolean ProcessReadrss=false;
-    private ProgressDialog progressDialog;
-    private URL url;
+    private boolean mBaseStatus=false;
+    private ProgressDialog mProgressDialog;
+    private URL mUrl;
     RecyclerView recyclerView;
     static String sAdressURL="";
-    NewsAdapter adapter;
+    private NewsAdapter mAdapter;
 
     public ReadRss(Context context, RecyclerView recyclerView, NewsAdapter adapter, String sAdressURL){
         this.sAdressURL = sAdressURL;
         this.recyclerView = recyclerView;
-        this.context = context;
-        this.adapter = adapter;
-        progressDialog = new ProgressDialog(context);
-        progressDialog.setMessage("Loading...");
+        this.mContext = context;
+        this.mAdapter = adapter;
+        mProgressDialog = new ProgressDialog(context);
+        mProgressDialog.setMessage("Loading...");
     }
 
     private DatabaseHelper getHelper() {
-        if (databaseHelper == null) {
-            databaseHelper = OpenHelperManager.getHelper(context, DatabaseHelper.class);
+        if (mDatabaseHelper == null) {
+            mDatabaseHelper = OpenHelperManager.getHelper(mContext, DatabaseHelper.class);
         }
-        return databaseHelper;
+        return mDatabaseHelper;
     }
 
     @Override
@@ -68,9 +66,9 @@ public class ReadRss extends AsyncTask<Void, Void, Void> {
             ProcessXml(Getdata());
         }
         else {
-            Toast.makeText(context, "Ошибка при проверке загружаемого документа", Toast.LENGTH_SHORT).show();
+            Toast.makeText(mContext, "Ошибка при проверке загружаемого документа", Toast.LENGTH_SHORT).show();
             Log.d("mLog", "Ошибка");
-            Updater=true;}
+            }
 
         return null;
     }
@@ -78,21 +76,20 @@ public class ReadRss extends AsyncTask<Void, Void, Void> {
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        progressDialog = new ProgressDialog(context);
-        progressDialog.setMessage("Downloading content, please wait...");
-        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        progressDialog.setIndeterminate(true);
-        progressDialog.setCancelable(false);
-        progressDialog.show();
+        mProgressDialog = new ProgressDialog(mContext);
+        mProgressDialog.setMessage("Downloading content, please wait...");
+        mProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        mProgressDialog.setIndeterminate(true);
+        mProgressDialog.setCancelable(false);
+        mProgressDialog.show();
     }
 
     @Override
     protected void onPostExecute(Void aVoid) {
         super.onPostExecute(aVoid);
-        ProcessReadrss=true;
-        creatBase(feedItems);
+        creatBase(mArrayListFeedItems);
         recyclerView.scrollToPosition(0);
-        this.progressDialog.dismiss();
+        this.mProgressDialog.dismiss();
     }
 
     private byte[] getLogoImage(String url){
@@ -123,21 +120,21 @@ public class ReadRss extends AsyncTask<Void, Void, Void> {
             } catch (SQLException e) {
                 e.printStackTrace();
             }
-            adapter.add(0, feed.get(i));
+            mAdapter.add(0, feed.get(i));
         }
     }
 
     private void ProcessXml(Document data) {
 
         if(data != null){
-            feedItems=new ArrayList<>();
+            mArrayListFeedItems=new ArrayList<>();
             Element root = data.getDocumentElement();
             Node channel = root.getChildNodes().item(1);
             NodeList items=channel.getChildNodes();
             for (int i=0; i<items.getLength();i++){
                 Node cureentchild=items.item(i);
                 if (cureentchild.getNodeName().equals("item")){
-                    BaseStatus=false; //меняет свое значение на true если считываемая запись в базе уже есть
+                    mBaseStatus=false; //меняет свое значение на true если считываемая запись в базе уже есть
                     FeedItem item=new FeedItem();
                     NodeList itemchilds=cureentchild.getChildNodes();
                     for (int j=0;j<itemchilds.getLength();j++){
@@ -147,27 +144,27 @@ public class ReadRss extends AsyncTask<Void, Void, Void> {
                         if(cureent.getNodeName().equals("title")){
 
                             try {
-                                feedItemIntegerDao = getHelper().getFeedItemDao();
-                                daoList = (ArrayList<FeedItem>) feedItemIntegerDao.queryForEq("title", cureent.getTextContent());
+                                mFeedItemIntegerDao = getHelper().getFeedItemDao();
+                                daoList = (ArrayList<FeedItem>) mFeedItemIntegerDao.queryForEq("title", cureent.getTextContent());
                             } catch (SQLException e) {
                                 e.printStackTrace();
                             }
 
                             if (daoList.size() > 0) {
-                                BaseStatus=true;
+                                mBaseStatus=true;
                             }
 
-                            if (BaseStatus==false){ //+
+                            if (mBaseStatus==false){ //+
                                 item.setTitle(cureent.getTextContent());
                             }
 
-                        } else if (cureent.getNodeName().equals("description")&&BaseStatus==false){
+                        } else if (cureent.getNodeName().equals("description")&&mBaseStatus==false){
                             item.setDescription(cureent.getTextContent());
-                        } else if (cureent.getNodeName().equals("pubDate")&&BaseStatus==false){
+                        } else if (cureent.getNodeName().equals("pubDate")&&mBaseStatus==false){
                             item.setDate(cureent.getTextContent());
-                        } else if (cureent.getNodeName().equals("link")&&BaseStatus==false){
+                        } else if (cureent.getNodeName().equals("link")&&mBaseStatus==false){
                             item.setLink(cureent.getTextContent());
-                        } else if (cureent.getNodeName().equals("media:thumbnail")&&BaseStatus==false){
+                        } else if (cureent.getNodeName().equals("media:thumbnail")&&mBaseStatus==false){
                             String url = cureent.getAttributes().item(0).getTextContent();
                             item.setContent(url);
                         } else if (cureent.getNodeName().equals("enclosure")) {
@@ -179,9 +176,9 @@ public class ReadRss extends AsyncTask<Void, Void, Void> {
                         }
                     }
 
-                    if(BaseStatus==false){
+                    if(mBaseStatus==false){
                         item.setUrl(sAdressURL);
-                        feedItems.add(item); //Запись значений в ArrayList
+                        mArrayListFeedItems.add(item); //Запись значений в ArrayList
                     }
                 }
             }
@@ -191,8 +188,8 @@ public class ReadRss extends AsyncTask<Void, Void, Void> {
 
     public Document Getdata(){
         try {
-            url = new URL(sAdressURL);
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            mUrl = new URL(sAdressURL);
+            HttpURLConnection connection = (HttpURLConnection) mUrl.openConnection();
             connection.setRequestMethod("GET");
             InputStream inputStream=connection.getInputStream();
             DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();

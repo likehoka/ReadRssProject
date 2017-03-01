@@ -23,22 +23,26 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class BlankDetails extends Fragment {
-    //TextView Title, Description, DateLocal;
-    //ImageView Thumbnail;
+
     //Элементы передачи входных данных из MainActivityFragment
     //Используются только для планшетов
-    private Bitmap thumbnail;
-    String title, description, datelocal, link;
-    @BindView(R.id.frag_date_text)
-    TextView fragDateText;
-    @BindView(R.id.frag_thumb_img)
-    ImageView fragThumbImg;
-    @BindView(R.id.frag_description_text)
-    TextView fragDescriptionText;
-    @BindView(R.id.frag_title_text)
-    TextView fragTitleText;
+    private Bitmap mThumbnail;
+    @BindView(R.id.textview_fragment_blank_details_date)
+    TextView textDate;
+    @BindView(R.id.image_fragment_blank_details_thumb_img)
+    ImageView imageThumbImg;
+    @BindView(R.id.textview_fragment_blank_details_description)
+    TextView textDescription;
+    @BindView(R.id.textview_fragment_blank_details_title)
+    TextView textTitle;
     @BindView(R.id.blankdetails_scrollview)
     ScrollView blankdetailsScrollview;
+
+
+    private String strTitle;
+    private String strDescription;
+    private String strDatelocal;
+    private String strLink;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -46,11 +50,11 @@ public class BlankDetails extends Fragment {
         setRetainInstance(true);
         View view = inflater.inflate(R.layout.fragment_blank_details, container, false);
         ButterKnife.bind(this, view);
-        fragTitleText.setText(title);
-        fragDescriptionText.setText(Html.fromHtml(description));
+        textTitle.setText(strTitle);
+        textDescription.setText(Html.fromHtml(strDescription));
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("E, dd MMM yyy HH:mm:ss zzz", Locale.ENGLISH);
         try {
-            Date date = simpleDateFormat.parse(datelocal);
+            Date date = simpleDateFormat.parse(strDatelocal);
             SimpleDateFormat print;
 
             if (getCurrentLocale(getContext()) == Locale.ENGLISH) {
@@ -58,18 +62,18 @@ public class BlankDetails extends Fragment {
             } else {
                 print = new SimpleDateFormat("E, dd MMM yyy HH:mm z", getCurrentLocale(getContext()));
             }
-            fragDateText.setText(print.format(date));
+            textDate.setText(print.format(date));
         } catch (ParseException exc) {
             exc.printStackTrace();
-            fragDateText.setText(datelocal);
+            textDate.setText(strDatelocal);
         }
 
-        fragThumbImg.setImageBitmap(thumbnail);
-        fragThumbImg.setOnClickListener(new View.OnClickListener() {
+        imageThumbImg.setImageBitmap(mThumbnail);
+        imageThumbImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getContext(), NewsDetails.class);
-                intent.putExtra("Link", link);
+                intent.putExtra("Link", strLink);
                 startActivity(intent);
             }
         });
@@ -78,23 +82,23 @@ public class BlankDetails extends Fragment {
     }
 
     public void setTitle(String title) {
-        this.title = title;
+        this.strTitle = title;
     }
 
     public void setDescription(String description) {
-        this.description = description;
+        this.strDescription = description;
     }
 
     public void setDate(String date) {
-        this.datelocal = date;
+        this.strDatelocal = date;
     }
 
     public void setLink(String link) {
-        this.link = link;
+        this.strLink = link;
     }
 
     public void setThumbnail(Bitmap thumbnail) {
-        this.thumbnail = thumbnail;
+        this.mThumbnail = thumbnail;
     }
 
     public Locale getCurrentLocale(Context context) {

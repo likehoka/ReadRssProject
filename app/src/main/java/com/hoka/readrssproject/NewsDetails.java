@@ -8,7 +8,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class NewsDetails extends Activity {
-    @BindView(R.id.webview)
+    @BindView(R.id.webView_activity_news_details)
     WebView webview;
 
     @Override

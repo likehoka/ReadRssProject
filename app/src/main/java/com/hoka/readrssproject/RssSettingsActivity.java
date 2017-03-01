@@ -25,11 +25,12 @@ import butterknife.OnClick;
 public class RssSettingsActivity extends MvpAppCompatActivity implements IRssSettingsActivity {
     @InjectPresenter
     RssSettingsPresenter rssSettingsPresenter;
+
     private DatabaseHelper mDatabaseHelper = null;
 
-    @BindView(R.id.edit_text_url_name)
+    @BindView(R.id.edit_text_activity_rss_settings_url_name)
     EditText editTextUrlName;
-    @BindView(R.id.button_open_url)
+    @BindView(R.id.button_activity_rss_settings_open_url)
     Button buttonOpenUrl;
 
     @Override
@@ -39,25 +40,26 @@ public class RssSettingsActivity extends MvpAppCompatActivity implements IRssSet
         ButterKnife.bind(this);
     }
 
-    @OnClick(R.id.button_open_url)
+    @OnClick(R.id.button_activity_rss_settings_open_url)
     public void onClick() {
 
         Log.d("mLog", "editTextUrlName.getText() = " + editTextUrlName.getText().toString());
-        String str = editTextUrlName.getText().toString();
         rssSettingsPresenter.showCheckRss(editTextUrlName.getText().toString());
     }
 
+    /*
     private DatabaseHelper getHelper() {
         if (mDatabaseHelper == null) {
             mDatabaseHelper = OpenHelperManager.getHelper(this, DatabaseHelper.class);
         }
         return mDatabaseHelper;
-    }
+    }*/
 
     @Override
     public void showMainActivity() {
+        mDatabaseHelper = OpenHelperManager.getHelper(this, DatabaseHelper.class);
         try {
-            DeleteBuilder<SaveUrlItem, Integer> deleteBuilder = getHelper().getSaveUrlItemDao().deleteBuilder();
+            DeleteBuilder<SaveUrlItem, Integer> deleteBuilder = mDatabaseHelper.getSaveUrlItemDao().deleteBuilder();
             deleteBuilder.delete();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -66,7 +68,7 @@ public class RssSettingsActivity extends MvpAppCompatActivity implements IRssSet
         SaveUrlItem saveUrlItem = new SaveUrlItem();
         saveUrlItem.setUrl(editTextUrlName.getText().toString());
         try {
-            Dao<SaveUrlItem, Integer> mSaveUrlItemDao = getHelper().getSaveUrlItemDao();
+            Dao<SaveUrlItem, Integer> mSaveUrlItemDao = mDatabaseHelper.getSaveUrlItemDao();
             mSaveUrlItemDao.create(saveUrlItem);
         } catch (SQLException e) {
             e.printStackTrace();

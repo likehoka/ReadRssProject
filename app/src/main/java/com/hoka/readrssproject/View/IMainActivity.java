@@ -7,6 +7,6 @@ import com.arellomobile.mvp.viewstate.strategy.StateStrategyType;
 
 public interface IMainActivity extends MvpView {
     @StateStrategyType(AddToEndSingleStrategy.class)
-    void showRecyclerViewDate(String s);
+    void showRecyclerViewDate(String strNameUrl);
 
 }
