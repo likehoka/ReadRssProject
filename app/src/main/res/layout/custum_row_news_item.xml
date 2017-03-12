@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
@@ -32,7 +33,7 @@
             android:src="@drawable/news"
             android:id="@+id/imageview_custum_row_news_item_thumb_img"
             android:layout_below="@+id/textview_custum_row_news_item_date_text"
-            android:layout_centerHorizontal="true"/>
+            android:layout_centerHorizontal="true" />
 
 
         <TextView

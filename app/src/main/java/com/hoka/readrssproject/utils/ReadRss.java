@@ -1,6 +1,5 @@
 package com.hoka.readrssproject.utils;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.support.v7.widget.RecyclerView;
@@ -38,12 +37,12 @@ import javax.xml.parsers.DocumentBuilderFactory;
 public class ReadRss extends AsyncTask<Void, Void, Void> {
     private Context mContext;
 
+
     private DatabaseHelper mDatabaseHelper = OpenHelperManager.getHelper(mContext, DatabaseHelper.class);;
     private Dao<FeedItem, Integer> mFeedItemIntegerDao;
     private ArrayList<FeedItem> mArrayListFeedItems;
 
     private boolean mBaseStatus=false;
-    private ProgressDialog mProgressDialog;
     private URL mUrl;
     private RecyclerView mRecyclerView;
     private String mAdressURL="";
@@ -54,13 +53,11 @@ public class ReadRss extends AsyncTask<Void, Void, Void> {
         mRecyclerView = recyclerView;
         mContext = context;
         mAdapter = adapter;
-        mProgressDialog = new ProgressDialog(context);
-        mProgressDialog.setMessage(mContext.getString(R.string.loading));
     }
 
     @Override
     protected Void doInBackground(Void... voids) {
-        if (Getdata()!=null && !isCancelled()){
+        if (Getdata()!=null){
             ProcessXml(Getdata());
         }
         else {
@@ -72,12 +69,6 @@ public class ReadRss extends AsyncTask<Void, Void, Void> {
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        mProgressDialog = new ProgressDialog(mContext);
-        mProgressDialog.setMessage(mContext.getString(R.string.download_content_message));
-        mProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        mProgressDialog.setIndeterminate(true);
-        mProgressDialog.setCancelable(false);
-        mProgressDialog.show();
     }
 
     @Override
@@ -85,21 +76,7 @@ public class ReadRss extends AsyncTask<Void, Void, Void> {
         super.onPostExecute(aVoid);
         creatBase(mArrayListFeedItems);
         mRecyclerView.scrollToPosition(0);
-        mProgressDialog.dismiss();
     }
-
-    @Override
-    protected void onCancelled(Void aVoid) {
-        super.onCancelled(aVoid);
-        mProgressDialog.dismiss();
-    }
-
-    @Override
-    protected void onCancelled() {
-        super.onCancelled();
-        mProgressDialog.dismiss();
-    }
-
 
     private byte[] getLogoImage(String url){
         try{

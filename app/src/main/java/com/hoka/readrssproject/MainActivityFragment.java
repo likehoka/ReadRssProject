@@ -56,7 +56,6 @@ public class MainActivityFragment extends MvpAppCompatFragment implements SwipeR
         mAdapter = new NewsAdapter();
         mRecyclerview.setAdapter(mAdapter);
         mListUrl = new ArrayList<>(DatabaseManager.getInstance().getAllSaveUrlItem());
-        //If
         if (mListUrl.size() != 0) {
             mPresenterMainActivity.showRecyclerDate(mListUrl.get(0).getUrl().toString());
         } else {
