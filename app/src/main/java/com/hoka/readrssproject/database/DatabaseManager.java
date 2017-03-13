@@ -46,7 +46,7 @@ public class DatabaseManager {
     public List<SaveUrlItem> getAllSaveUrlItem() {
         List<SaveUrlItem> mListSaveUrlItem = null;
         try {
-            mListSaveUrlItem = (ArrayList<SaveUrlItem>) getHelper().getSaveUrlItemDao().queryForAll();
+            mListSaveUrlItem = (List<SaveUrlItem>) getHelper().getSaveUrlItemDao().queryForAll();
         } catch (SQLException e) {
             e.printStackTrace();
         }

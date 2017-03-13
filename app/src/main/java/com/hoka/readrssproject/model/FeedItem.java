@@ -12,15 +12,15 @@ import java.io.Serializable;
 
 @DatabaseTable(tableName = "all_news")
 public class FeedItem implements Serializable {
-    public static final String COLUMN_ID = "id";
-    public static final String COLUMN_URL = "url";
-    public static final String COLUMN_TITLE = "title";
-    public static final String COLUMN_DATE = "date";
-    public static final String COLUMN_AUTHOR = "author";
-    public static final String COLUMN_IMAGE = "image";
-    public static final String COLUMN_DESCRIPTION = "description";
-    public static final String COLUMN_LINK = "link";
-    public static final String COLUMN_CONTENT = "content";
+    private static final String COLUMN_ID = "id";
+    private static final String COLUMN_URL = "url";
+    private static final String COLUMN_TITLE = "title";
+    private static final String COLUMN_DATE = "date";
+    private static final String COLUMN_AUTHOR = "author";
+    private static final String COLUMN_IMAGE = "image";
+    private static final String COLUMN_DESCRIPTION = "description";
+    private static final String COLUMN_LINK = "link";
+    private static final String COLUMN_CONTENT = "content";
 
     @DatabaseField(columnName = COLUMN_ID, generatedId = true)
     private int id;

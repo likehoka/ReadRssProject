@@ -10,14 +10,16 @@ import android.widget.Toast;
 
 import com.arellomobile.mvp.MvpAppCompatFragment;
 import com.arellomobile.mvp.presenter.InjectPresenter;
-import com.hoka.readrssproject.view.IMainActivity;
 import com.hoka.readrssproject.adapter.NewsAdapter;
+import com.hoka.readrssproject.database.DatabaseHelper;
 import com.hoka.readrssproject.database.DatabaseManager;
 import com.hoka.readrssproject.model.FeedItem;
 import com.hoka.readrssproject.model.SaveUrlItem;
 import com.hoka.readrssproject.presenter.PresenterMainActivity;
 import com.hoka.readrssproject.utils.ReadRss;
 import com.hoka.readrssproject.utils.VerticalSpace;
+import com.hoka.readrssproject.view.IMainActivity;
+import com.j256.ormlite.dao.Dao;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,6 +47,8 @@ public class MainActivityFragment extends MvpAppCompatFragment implements SwipeR
     private List<FeedItem> mList;
     private List<SaveUrlItem> mListUrl;
     private ArrayList<FeedItem> mListAdapter;
+    Dao<SaveUrlItem, Integer> urlDao;
+    DatabaseHelper mDatabasehelper;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

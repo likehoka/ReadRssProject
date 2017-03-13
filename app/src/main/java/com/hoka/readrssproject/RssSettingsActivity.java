@@ -7,13 +7,12 @@ import android.widget.Toast;
 
 import com.arellomobile.mvp.MvpAppCompatActivity;
 import com.arellomobile.mvp.presenter.InjectPresenter;
-import com.hoka.readrssproject.view.IRssSettingsActivity;
 import com.hoka.readrssproject.database.DatabaseHelper;
 import com.hoka.readrssproject.model.SaveUrlItem;
 import com.hoka.readrssproject.presenter.RssSettingsPresenter;
+import com.hoka.readrssproject.view.IRssSettingsActivity;
 import com.j256.ormlite.android.apptools.OpenHelperManager;
 import com.j256.ormlite.dao.Dao;
-import com.j256.ormlite.stmt.DeleteBuilder;
 
 import java.sql.SQLException;
 
@@ -54,8 +53,9 @@ public class RssSettingsActivity extends MvpAppCompatActivity implements IRssSet
     public void showMainActivity() {
         mDatabaseHelper = OpenHelperManager.getHelper(this, DatabaseHelper.class);
         try {
-            DeleteBuilder<SaveUrlItem, Integer> deleteBuilder = mDatabaseHelper.getSaveUrlItemDao().deleteBuilder();
-            deleteBuilder.delete();
+            //DeleteBuilder<SaveUrlItem, Integer> deleteBuilder = mDatabaseHelper.getSaveUrlItemDao().deleteBuilder();
+            Dao<SaveUrlItem, Integer> deleteBuilder = mDatabaseHelper.getSaveUrlItemDao();
+            deleteBuilder.delete(deleteBuilder.queryForAll());
         } catch (SQLException e) {
             e.printStackTrace();
         }

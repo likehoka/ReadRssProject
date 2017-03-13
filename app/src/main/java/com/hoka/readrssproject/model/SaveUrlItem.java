@@ -12,8 +12,8 @@ import java.io.Serializable;
 
 @DatabaseTable(tableName = "url_item")
 public class SaveUrlItem implements Serializable {
-    public static final String COLUMN_ID = "id";
-    public static final String COLUMN_URL = "url";
+    private static final String COLUMN_ID = "id";
+    private static final String COLUMN_URL = "url";
 
     @DatabaseField(columnName = COLUMN_ID, generatedId = true)
     private int id;
